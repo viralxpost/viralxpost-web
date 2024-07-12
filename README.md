@@ -88,9 +88,9 @@ Follow these steps to set up the project on your local machine:
 - [MongoDB](https://www.mongodb.com/)
 
 ## Need Help?
-- [Discord](https://discord.gg/rBTTVJp?utm_source=github&utm_medium=organic&utm_campaign=readme)
-- [Twitter](https://community.appsmith.com/?utm_source=github&utm_medium=organic&utm_campaign=readme)
-- [support@viralxpost.xyz](127.0.0.1)
+- [Discord](https://discord.gg/gFtTFUFFUw)
+- [Twitter](https://x.com/viralxpostai)
+- [support@viralxpost.xyz](mailto:viralxpost.xyz@gmail.com)
 
 
 ### Top Contributors
