@@ -9,7 +9,7 @@ const HomePage = () => {
           <Hero
           >
             <HeroTitle>
-            Start Generating Viral Tweets Today <br /> Let <Link  to="/" className="underline">viralxpost</Link> Be Your Guide.
+            Start Generating Viral Tweets Today <br /> Let <Link  to="/" className="hover:bg-zinc-400 inline-block text-transparent bg-clip-text">viralxpost</Link> Be Your Guide.
             </HeroTitle>
             <HeroSubtitle>
               Meet the new standard for modern software development. <br/>
