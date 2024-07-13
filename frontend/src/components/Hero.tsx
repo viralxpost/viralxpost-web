@@ -1,24 +1,24 @@
-import React from 'react'
-
+import { cn } from "@/lib/utils";
 interface HeroProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 interface HeroElementProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
+  className?: string;
 }
 
-export const HeroTitle = ({ children }: HeroElementProps) => {
+export const HeroTitle = ({ children, className }: HeroElementProps) => {
     return (
     <>
-    <h1 className='lg:text-6xl md:text-5xl font-semibold bg-gradient-to-r from-white to-[#999999] inline-block text-transparent bg-clip-text text-4xl my-6'>{children}</h1>
+    <h1 className={cn(`md:text-4xl lg:text-6xl font-semibold bg-gradient-to-r from-white to-[#999999] inline-block text-transparent bg-clip-text text-lg my-4 ${className}`)}>{children}</h1>
     </>
     )
 }
 
-export const HeroSubtitle = ({children}: HeroElementProps) => {
+export const HeroSubtitle = ({children, className}: HeroElementProps) => {
     return (
-        <p className='text-lg mb-12 opacity-70'>{children}</p>
+        <p className={cn('md:text-lg text-[10px] mb-6 opacity-70', className)}>{children}</p>
     )
 }
 
