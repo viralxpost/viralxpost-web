@@ -3,16 +3,22 @@ import { config } from "./config";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(config.databaseUrl as string);
+
     mongoose.connection.on("connected", () => {
       console.log("Connected to Database successfully");
     });
 
     mongoose.connection.on("error", (err) => {
-      console.log("Error in Connecting to Database", err);
+      console.error("Error in Connecting to Database:", err);
     });
+
+    mongoose.connection.on("disconnected", () => {
+      console.log("Disconnected from Database");
+    });
+
+    await mongoose.connect(config.databaseUrl as string);
   } catch (error) {
-    console.log("Failed to connect to Database");
+    console.error("Failed to connect to Database:", error);
     process.exit(1);
   }
 };
