@@ -1,9 +1,13 @@
-import express from 'express'
-import userRouter from './routes/userRotes'
+import express from "express";
+import userRouter from "./routes/userRotes";
 
-const app = express()
-app.use(express.json())
+const app = express();
+app.use(express.json());
 
-app.use("/api/v0/users/", userRouter)
+app.get("/", (req, res) => {
+  res.send("viralxpost");
+});
 
-export default app
+app.use("/api/v0/users/", userRouter);
+
+export default app;
