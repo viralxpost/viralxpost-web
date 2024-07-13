@@ -1,12 +1,14 @@
 import app from "./app";
 import { config } from "./config/config";
+import connectDB from "./config/db";
 
 const startServer = () => {
-    const port = config.port || 3000
+  connectDB();
+  const port = config.port || 3000;
 
-    app.listen(port, () => {
-        console.log(`Server is running on port ${port}`)
-    })
-}
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+};
 
 startServer();
