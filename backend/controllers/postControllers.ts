@@ -3,6 +3,7 @@ import tweetModel from "../models/tweet";
 import createHttpError from "http-errors";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { config } from "../config/config";
+import { AuthRequest } from "../middlewares/authenticate";
 
 const createTweets = async (
   req: Request,
@@ -15,6 +16,7 @@ const createTweets = async (
   if (!title || !tags || !voice || !format) {
     return next(createHttpError(400, "All fields are required"));
   }
+  const _req = req as AuthRequest;
   try {
     const prompt = `Write a tweet about ${title} on ${tags} topic in ${voice} in ${format}`;
     const result = await model.generateContent(prompt);
@@ -28,6 +30,7 @@ const createTweets = async (
       voice,
       format,
       content: text,
+      user: _req.userId,
     });
 
     res
@@ -43,7 +46,22 @@ const getAllTweets = async (
   res: Response,
   next: NextFunction
 ) => {
-  res.json({ message: "Get all tweets" });
+  const _req = req as AuthRequest;
+  try {
+    const userId = _req.userId;
+
+    const tweets = await tweetModel
+      .find({ user: userId })
+      .populate("user", "name");
+
+    if (!tweets || tweets.length === 0) {
+      return next(createHttpError(404, "No tweets found"));
+    }
+
+    res.status(200).json({ tweets });
+  } catch (error) {
+    next(createHttpError(500, "Something went wrong"));
+  }
 };
 
 const createThreads = async (
