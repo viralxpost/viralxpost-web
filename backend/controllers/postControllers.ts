@@ -6,6 +6,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { config } from "../config/config";
 import { AuthRequest } from "../middlewares/authenticate";
 
+// Create tweet Logic
+
 const createTweets = async (
   req: Request,
   res: Response,
@@ -42,6 +44,8 @@ const createTweets = async (
   }
 };
 
+// Get all tweets Logic
+
 const getAllTweets = async (
   req: Request,
   res: Response,
@@ -64,6 +68,8 @@ const getAllTweets = async (
     next(createHttpError(500, "Something went wrong"));
   }
 };
+
+// Create thread Logic
 
 const createThreads = async (
   req: Request,
@@ -100,6 +106,8 @@ const createThreads = async (
     return next(createHttpError(500, "Something went wrong"));
   }
 };
+
+// Get all threads logic
 
 const getAllThreads = async (
   req: Request,
