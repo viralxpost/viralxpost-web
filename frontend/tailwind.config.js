@@ -85,6 +85,14 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
         "fade-in": {
           from: { opacity: 0, transform: "translateY(-10px)" },
           to: { opacity: 1, transform: "none" },
@@ -168,6 +176,8 @@ module.exports = {
         },
       },
       animation: {
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
         "fade-in": "fade-in 1000ms var(--animation-delay, 0ms) ease forwards",
         "image-rotate": "image-rotate 1400ms ease forwards",
         "image-glow": "image-glow 4100ms 600ms ease-out forwards",
