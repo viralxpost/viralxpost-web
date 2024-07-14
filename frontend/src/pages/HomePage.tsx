@@ -19,7 +19,7 @@ const HomePage = () => {
   return (
     
     <Container>
-      <div className="z-10 translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:100ms] flex lg:min-h-[10rem] md:min-h-[7rem] min-h-[5rem] items-center justify-center">
+      <div className="z-10 translate-y-[-1rem] mt-24 animate-fade-in opacity-0 [--animation-delay:100ms] flex lg:min-h-[10rem] md:min-h-[7rem] min-h-[5rem] items-center justify-center">
         <div
           className={cn(
             "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-zinc-900 dark:hover:bg-neutral-800",
