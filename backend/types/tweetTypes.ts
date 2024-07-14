@@ -13,6 +13,6 @@ export interface Tweet extends mongoose.Document {
     | "creative"
     | "passionate";
   format: string;
-  content: string[];
+  content: string;
   user: mongoose.Schema.Types.ObjectId;
 }
