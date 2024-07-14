@@ -106,7 +106,22 @@ const getAllThreads = async (
   res: Response,
   next: NextFunction
 ) => {
-  res.json({ message: "Get all threads" });
+  const _req = req as AuthRequest;
+  try {
+    const userId = _req.userId;
+
+    const threads = await threadModel
+      .find({ user: userId })
+      .populate("user", "name");
+
+    if (!threads || threads.length === 0) {
+      return next(createHttpError(404, "No threads found"));
+    }
+
+    res.status(200).json({ threads });
+  } catch (error) {
+    next(createHttpError(500, "Something went wrong"));
+  }
 };
 
 export { createTweets, getAllTweets, createThreads, getAllThreads };
