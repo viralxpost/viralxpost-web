@@ -2,7 +2,7 @@ import { InputIcon } from "@radix-ui/react-icons";
 import { HeroSubtitle, HeroTitle } from "./Hero";
 import { BentoCard, BentoGrid } from "./magicui/bento-grid";
 import {  BellIcon, CalendarIcon, FileTextIcon, GlobeIcon } from "lucide-react";
-import { AnimatedBeamDemo } from "./AnimatedBeamDemo";
+
 
 
 const BentoComp = () => {
@@ -13,7 +13,7 @@ const BentoComp = () => {
           description: "We automatically save your files as you type.",
           href: "/",
           cta: "Learn more",
-          background: <AnimatedBeamDemo/>,
+          background: "",
           className: "lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3",
         },
         {
