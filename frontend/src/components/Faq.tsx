@@ -13,7 +13,7 @@ const Faq = () => {
             <HeroTitle className="grid">
                 Frequently Asked Questions
             </HeroTitle>
-            <div className="lg:max-w-[1000px] mx-auto py-16">
+            <div className="lg:max-w-[1150px] mx-auto py-16">
                 <Accordion type="single" collapsible>
                     <AccordionItem value="item-1">
                         <AccordionTrigger>Is it accessible?</AccordionTrigger>

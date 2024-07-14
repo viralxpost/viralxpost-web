@@ -6,10 +6,10 @@ import Logo from "./icons/Logo"
 
 const Navbar = () => {
     return (
-        <nav className="relative">
+        <nav className="fixed top-0 z-10 w-full backdrop-blur-[12px]">
             
-            <div className="flex justify-between items-center p-4 lg:px-28">   
-                <Link to="/"  className="flex items-center gap-2 font-semibold md:text-2xl">
+            <div className="flex justify-between items-center p-3 md:px-4 lg:px-28">   
+                <Link to="/"  className="flex items-center  font-semibold lg:text-2xl md:text-lg">
                 <Logo/>
                     viralxpost
                 </Link>
