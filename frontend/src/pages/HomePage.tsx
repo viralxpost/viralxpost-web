@@ -55,7 +55,7 @@ const HomePage = () => {
         <div className="items-center mt-8 md:mt-0 justify-center">
           
           <img
-          className="md:hidden block relative z-10 transition-opacity delay-[680ms]"
+          className="md:hidden block  z-10 transition-opacity delay-[680ms]"
           src="/dark-hero.png"
           alt="Hero image"
         />
