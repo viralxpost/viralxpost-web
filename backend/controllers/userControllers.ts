@@ -92,6 +92,13 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const logoutUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res.clearCookie("accessToken");
+    res.status(200).json({ message: "Successfully logged out" });
+  } catch (error) {
+    return next(createHttpError(500, "Something went wrong"));
+  }
+};
 
-
-export { createUser, loginUser };
+export { createUser, loginUser, logoutUser };
