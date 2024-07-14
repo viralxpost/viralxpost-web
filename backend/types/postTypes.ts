@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export interface Post extends mongoose.Document {
-  title: string;
-  content: string;
+  tweet: mongoose.Schema.Types.ObjectId;
+  thread: mongoose.Schema.Types.ObjectId;
   user: mongoose.Schema.Types.ObjectId;
 }

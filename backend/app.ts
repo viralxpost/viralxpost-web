@@ -13,6 +13,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v0/users/", userRouter);
+app.use("/api/v0/posts/", userRouter);
 
 //gloabl error handler
 app.use(globalErrorHandler);
