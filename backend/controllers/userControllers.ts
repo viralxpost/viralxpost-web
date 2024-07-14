@@ -47,7 +47,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
 
     res.cookie("accessToken", token, {
       httpOnly: true,
-      secure: config.nodeEnviourment === "production",
+      secure: config.nodeEnv === "production",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -82,7 +82,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 
     res.cookie("accessToken", token, {
       httpOnly: true,
-      secure: config.nodeEnviourment === "production",
+      secure: config.nodeEnv === "production",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
