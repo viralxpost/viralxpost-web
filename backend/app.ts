@@ -1,7 +1,8 @@
 import express from "express";
-import userRouter from "./routes/userRotes";
+import userRouter from "./routes/userRouter";
 import globalErrorHandler from "./middlewares/globalErrorHandler";
 import cookieParser from "cookie-parser";
+import postRouter from "./routes/postRouter";
 
 const app = express();
 app.use(express.json());
@@ -13,7 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v0/users/", userRouter);
-app.use("/api/v0/posts/", userRouter);
+app.use("/api/v0/posts/", postRouter);
 
 //gloabl error handler
 app.use(globalErrorHandler);
