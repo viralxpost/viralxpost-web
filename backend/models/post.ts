@@ -3,14 +3,14 @@ import { Post } from "../types/postTypes";
 
 const postSchema = new mongoose.Schema<Post>(
   {
-    title: {
-      type: String,
-      required: true,
+    tweet: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tweet",
     },
 
-    content: {
-      type: String,
-      required: true,
+    thread: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Thread",
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
