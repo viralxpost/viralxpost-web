@@ -1,6 +1,13 @@
+
+import { AvatarCirclesUrl } from "@/components/Avatarurl";
+import BentoComp from "@/components/BentoComp";
 import Container from "@/components/Container";
+import Faq from "@/components/Faq";
 import { Hero, HeroSubtitle, HeroTitle } from "@/components/Hero";
 import { HeroImage } from "@/components/HeroImage";
+import LogoTicker from "@/components/LogoTicker";
+import { MarqueeComp } from "@/components/MarqueeComp";
+import { TextRevealComp } from "@/components/TextRevealComp";
 import AnimatedShinyText from "@/components/magicui/animated-shiny-text";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -8,6 +15,7 @@ import { ArrowRightIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const HomePage = () => {
+  
   return (
     
     <Container>
@@ -26,7 +34,7 @@ const HomePage = () => {
       <Hero>
         <HeroTitle className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
           Start Generating Viral Tweets Today <br className="hidden md:inline-block " /> Let {" "}
-          <Link to="/">viralxpost</Link> Be Your Guide.
+          <Link to="/" className="underline">viralxpost</Link> Be Your Guide.
         </HeroTitle>
         <HeroSubtitle className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]">
           Meet the new standard for modern software development. <br className="hidden md:block" />
@@ -53,10 +61,40 @@ const HomePage = () => {
         />
         
         </div>
+        <div className="flex justify-center mt-20 w-96 mx-auto">
+     
+     
+     
+    </div>
+        
+        <LogoTicker />
+        <BentoComp/>
+        <div className="mt-28  max-w-[1000px] mx-auto">
+          <HeroTitle >
+          Trusted by the best
+          </HeroTitle>
+          <div className="py-6">
+
+          <AvatarCirclesUrl/>
+          </div>
+
+        <MarqueeComp/>
+        </div>
+       <TextRevealComp/>
+
+       
+
+        
+        <Faq/>
+
+       
+
+
         
 
 
       </Hero>
+      
       
     </Container>
   );
