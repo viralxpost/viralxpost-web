@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import createHttpError from "http-errors";
 import validator from "validator";
 import userModel from "../models/user";
-import postModel from "../models/post";
 import { config } from "../config/config";
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -46,10 +45,53 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
       expiresIn: "7d",
     });
 
+    res.cookie("accessToken", token, {
+      httpOnly: true,
+      secure: config.nodeEnviourment === "production",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
     res.status(201).json({ accessToken: token });
   } catch (error) {
     next(createHttpError(500, "Something went wrong"));
   }
 };
 
-export default createUser;
+const loginUser = async (req: Request, res: Response, next: NextFunction) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return next(createHttpError(400, "Please provide email and password"));
+  }
+
+  try {
+    let user = await userModel.findOne({ email });
+
+    if (!user) {
+      return next(createHttpError(400, "Invalid credentials"));
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return next(createHttpError(400, "Invalid credentials"));
+    }
+
+    const token = jwt.sign({ sub: user._id }, config.jwtSecret as string, {
+      expiresIn: "7d",
+    });
+
+    res.cookie("accessToken", token, {
+      httpOnly: true,
+      secure: config.nodeEnviourment === "production",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({ accessToken: token });
+  } catch (error) {
+    return next(createHttpError(500, "Something went wrong"));
+  }
+};
+
+
+
+export { createUser, loginUser };
