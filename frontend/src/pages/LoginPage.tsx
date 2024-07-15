@@ -39,8 +39,8 @@ export function LoginPage() {
   }
 
   return (
-    <div className="flex items-center  justify-center ">
-      <div className="flex items-center mt-40 border border-[#ffffff1f] px-12 rounded-md  justify-center py-12">
+    <div className="w-full mx-auto  xl:min-h-[800px]">
+      <div className="flex items-center md:mt-40 px-12 rounded-md  justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold">Login</h1>

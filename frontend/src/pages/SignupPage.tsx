@@ -5,8 +5,8 @@ import { Link } from "react-router-dom"
 
 const SignupPage = () => {
   return (
-    <div className="flex items-center  justify-center ">
-      <div className="flex mt-40 items-center  px-12 rounded-md  justify-center py-12">
+    <div className="w-full xl:min-h-[800px]">
+      <div className="flex md:mt-40 items-center  px-12 rounded-md  justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold">Sign up</h1>
