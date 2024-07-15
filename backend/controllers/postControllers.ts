@@ -25,7 +25,11 @@ const createTweets = async (
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    console.log(text);
+    if (config.nodeEnv === "development") {
+      console.log(text);
+    } else {
+      console.log("");
+    }
 
     const newTweet = await tweetModel.create({
       title,
@@ -88,7 +92,12 @@ const createThreads = async (
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    console.log(text);
+
+    if (config.nodeEnv === "development") {
+      console.log(text);
+    } else {
+      console.log("");
+    }
 
     const newThread = await threadModel.create({
       title,
