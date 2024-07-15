@@ -1,74 +1,74 @@
-import { InputIcon } from "@radix-ui/react-icons";
+import {  MagicWandIcon } from "@radix-ui/react-icons";
 import { HeroSubtitle, HeroTitle } from "./Hero";
 import { BentoCard, BentoGrid } from "./magicui/bento-grid";
-import {  BellIcon, CalendarIcon, FileTextIcon, GlobeIcon } from "lucide-react";
+import { Clock, GlobeIcon, Palette, TrendingUp } from "lucide-react";
 
 
 
 const BentoComp = () => {
-    const features = [
-        {
-          Icon: FileTextIcon,
-          name: "Save your files",
-          description: "We automatically save your files as you type.",
-          href: "/",
-          cta: "Learn more",
-          background: "",
-          className: "lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3",
-        },
-        {
-          Icon: InputIcon,
-          name: "Full text search",
-          description: "Search through all your files in one place.",
-          href: "/",
-          cta: "Learn more",
-          background: <img className="absolute -right-20 -top-20 opacity-60" />,
-          className: "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",
-        },
-        {
-          Icon: GlobeIcon,
-          name: "Multilingual",
-          description: "Supports 100+ languages and counting.",
-          href: "/",
-          cta: "Learn more",
-          background: "",
-          className: "lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4",
-        },
-        {
-          Icon: CalendarIcon,
-          name: "Calendar",
-          description: "Use the calendar to filter your files by date.",
-          href: "/",
-          cta: "Learn more",
-          background: <img className="absolute -right-20 -top-20 opacity-60" />,
-          className: "lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2",
-        },
-        {
-          Icon: BellIcon,
-          name: "Notifications",
-          description:
-            "Get notified when someone shares a file or mentions you in a comment.",
-          href: "/",
-          cta: "Learn more",
-          background: <img className="absolute -right-20 -top-20 opacity-60" />,
-          className: "lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4",
-        },
-      ];
+  const features = [
+    {
+      Icon: MagicWandIcon,
+      name: "Generate human-quality tweets and threads",
+      description: "Our AI crafts tweets and threads that sound like they were written by a real person. No more robotic or impersonal content.",
+      href: "/",
+      cta: "Learn more",
+      background: "",
+      className: "lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3",
+    },
+    {
+      Icon: Palette,
+      name: "Choose from Various Tones and Styles",
+      description: "Tailor your content to match your brand's personality. From witty and humorous to informative and professional, we've got you covered.",
+      href: "/",
+      cta: "Learn more",
+      background: <img className="absolute -right-20 -top-20 opacity-60" />,
+      className: "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",
+    },
+    {
+      Icon: GlobeIcon,
+      name: "Customize Content to Match Your Brand",
+      description: "Align your tweets and threads with your brand identity. Our tool helps you maintain consistency and authenticity.",
+      href: "/",
+      cta: "Learn more",
+      background: "",
+      className: "lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4",
+    },
+    {
+      Icon: Clock,
+      name: "Save Time and Increase Engagement",
+      description: "Spend less time crafting content and more time engaging with your audience. Our AI-powered tool streamlines the content creation process.",
+      href: "/",
+      cta: "Learn more",
+      background: <img className="absolute -right-20 -top-20 opacity-60" />,
+      className: "lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2",
+    },
+    {
+      Icon: TrendingUp,
+      name: "Optimize for Maximum Reach",
+      description:
+        "Increase your tweet's visibility with our AI-driven optimization tools",
+      href: "/",
+      cta: "Learn more",
+      background: <img className="absolute -right-20 -top-20 opacity-60" />,
+      className: "lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4",
+    },
+  ];
   return (
     <div className="mt-20">
-        <HeroTitle className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:300ms]">
-          Features
-        </HeroTitle>
-        <HeroSubtitle>
-          Our powerful features make viralxpost the go-to tool for modern software development.
-        </HeroSubtitle>
+      <HeroTitle className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:300ms]">
+        Key Features
+      </HeroTitle>
+      <HeroSubtitle>
+        Unleash the Power of AI
+      </HeroSubtitle>
 
-        <BentoGrid className="lg:grid-rows-3 mt-20">
+      <BentoGrid className="lg:grid-rows-3 mt-20">
         {features.map((feature) => (
           <BentoCard key={feature.name} {...feature} />
         ))}
       </BentoGrid>
-        </div>
+    </div>
   )
 }
 
