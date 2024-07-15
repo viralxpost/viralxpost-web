@@ -37,8 +37,7 @@ const HomePage = () => {
           <Link to="/" className="underline">viralxpost</Link> Be Your Guide.
         </HeroTitle>
         <HeroSubtitle className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]">
-          Meet the new standard for modern software development. <br className="hidden md:block" />
-          Streamline issues, sprints, and product roadmaps.
+        Let our AI tool help you create engaging content that breaks <br className="hidden md:block" /> through the noise and gets you seen by the right people.
         </HeroSubtitle>
         <Link to="#">
           <Button className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:600ms]">
