@@ -27,16 +27,16 @@ export function LoginPage() {
   })
 
 
-  
+
   const handleLoginSubmit = () => {
     const email = emailRef.current?.value
     const password = passwordRef.current?.value
 
     //make server call
-    if(!email || !password) {
+    if (!email || !password) {
       return alert("Please enter email and password")
     }
-    
+
     mutation.mutate({ email, password })
   }
 
@@ -47,7 +47,9 @@ export function LoginPage() {
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold">Login</h1>
             <p className="text-sm text-muted-foreground">
-              Enter your email below to login to your account
+              Enter your email below to login to your account'
+              <br />
+              {mutation.isError && <span className="text-red-500 text-sm">{mutation.error.message}</span>}
             </p>
           </div>
           <div className="grid gap-4">
@@ -74,7 +76,7 @@ export function LoginPage() {
               <Input ref={passwordRef} id="password" type="password" required />
             </div>
             <Button onClick={handleLoginSubmit} type="submit" className="w-full" disabled={mutation.isPending}>
-            <Loader className={cn(mutation.isPending ? "animate-spin" : "hidden")}/>
+              <Loader className={cn(mutation.isPending ? "animate-spin" : "hidden")} />
               <span className={cn(mutation.isPending ? "hidden" : "block")}>Login</span>
             </Button>
             <Button variant="outline" className="w-full">
