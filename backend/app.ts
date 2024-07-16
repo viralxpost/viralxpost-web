@@ -18,7 +18,11 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-console.log(config.frontendDomain);
+if (config.nodeEnv === "development") {
+  console.log(config.frontendDomain);
+} else {
+  console.log("");
+}
 
 app.get("/", (req, res) => {
   res.send("viralxpost");
