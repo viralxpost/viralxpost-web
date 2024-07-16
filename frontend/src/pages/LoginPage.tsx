@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { login } from "@/http/api"
+import { cn } from "@/lib/utils"
 import { useMutation } from "@tanstack/react-query"
+import { Loader } from "lucide-react"
 import { useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -71,8 +73,9 @@ export function LoginPage() {
               </div>
               <Input ref={passwordRef} id="password" type="password" required />
             </div>
-            <Button onClick={handleLoginSubmit} type="submit" className="w-full">
-              Login
+            <Button onClick={handleLoginSubmit} type="submit" className="w-full" disabled={mutation.isPending}>
+            <Loader className={cn(mutation.isPending ? "animate-spin" : "hidden")}/>
+              <span className={cn(mutation.isPending ? "hidden" : "block")}>Login</span>
             </Button>
             <Button variant="outline" className="w-full">
               Login with Google
