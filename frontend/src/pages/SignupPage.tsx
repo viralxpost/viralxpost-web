@@ -2,7 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { register } from "@/http/api";
+import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
 
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -46,6 +48,9 @@ const SignupPage = () => {
             <p className="text-sm text-muted-foreground">
               Enter your username, email and password below to register to your
               account
+              <br />
+              
+              {mutation.isError && <span className="text-red-500 text-sm">{mutation.error.message}</span>}
             </p>
           </div>
           <div className="grid gap-4">
@@ -76,7 +81,10 @@ const SignupPage = () => {
               <Input ref={passwordRef} id="password" type="password" required />
             </div>
             <Button onClick={handleSignupSubmit} type="submit" className="w-full">
-              Sign up
+              <Loader className={cn(mutation.isPending? "animate-spin" : "hidden")} />
+              <span className={cn(mutation.isPending? "hidden" : "block")}>
+                Sign up
+              </span>
             </Button>
             <Button variant="outline" className="w-full">
               Login with Google
