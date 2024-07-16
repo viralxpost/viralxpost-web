@@ -79,7 +79,13 @@ Follow these steps to set up the project on your local machine:
     ```sh
     ./install.sh
     ```
+## Available Scripts
 
+In the project directory, you can run:
+
+- `npm backend` : Starts the backend server using `nodemon` with `backend/server.ts`.
+- `npm frontend` : Starts the frontend development server from the `frontend` directory.
+- `npm run dev` : Runs both frontend and backend concurrently using `concurrently`.
 ---
 ## Learning Resources
 - [Reactjs](https://react.dev/)
