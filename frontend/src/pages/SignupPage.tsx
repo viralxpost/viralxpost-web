@@ -24,10 +24,13 @@ const SignupPage = () => {
     mutationFn: register,
     onSuccess: (response) => {
       console.log("signup successful")
-      setToken(response.data.accessToken)
+      setToken(response.accessToken)
       //redirect to dashboard
       navigate('/dashboard')
-    }
+    },
+    onError: (error) => {
+      console.log("Error:", error);
+    },
   })
 
   const handleSignupSubmit = () => {
@@ -54,7 +57,7 @@ const SignupPage = () => {
               account
               <br />
               
-              {mutation.isError && <span className="text-red-500 text-sm">{mutation.error.message}</span>}
+              {mutation.isError && <span className="text-red-500 text-sm">{mutation.error?.message || "An error occurred"}</span>}
             </p>
           </div>
           <div className="grid gap-4">

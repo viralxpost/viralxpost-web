@@ -24,14 +24,14 @@ export function LoginPage() {
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (response) => {
-      console.log("login successful")
-
-      setToken(response.data.accessToken)
-      //redirect to dashboard
-      
-      navigate('/dashboard')
-    }
-  })
+      console.log("login successful");
+      setToken(response.accessToken);
+      navigate("/dashboard");
+    },
+    onError: (error) => {
+      console.log("Error:", error);
+    },
+  });
 
 
 
@@ -56,7 +56,11 @@ export function LoginPage() {
             <p className="text-sm text-muted-foreground">
               Enter your email below to login to your account'
               <br />
-              {mutation.isError && <span className="text-red-500 text-sm">{mutation.error.message}</span>}
+              {mutation.isError && (
+                <span className="text-red-500 text-sm">
+                   {mutation.error?.message || "An error occurred"}
+                </span>
+              )}
             </p>
           </div>
           <div className="grid gap-4">
