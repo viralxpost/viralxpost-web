@@ -1,7 +1,8 @@
+import config from "@/config/config";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5513",
+  baseURL: config.backendBaseUrl,
   headers: {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
     "Content-Type": "application/json",
@@ -21,7 +22,11 @@ export const login = async (data: { email: string; password: string }) => {
   }
 };
 
-export const register = async (data: { name: string; email: string; password: string }) => {
+export const register = async (data: {
+  name: string;
+  email: string;
+  password: string;
+}) => {
   try {
     const response = await api.post("/api/v0/users/register", data);
     return response.data;
