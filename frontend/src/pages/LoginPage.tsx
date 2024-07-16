@@ -1,51 +1,51 @@
-
-
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { login } from "@/http/api"
-import { cn } from "@/lib/utils"
-import useTokenStore from "@/store"
-import { useMutation } from "@tanstack/react-query"
-import { Loader } from "lucide-react"
-import { useRef } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import config from "@/config/config";
+import { login } from "@/http/api";
+import { cn } from "@/lib/utils";
+import useTokenStore from "@/store";
+import { useMutation } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
+import { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export function LoginPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const setToken = useTokenStore((state) => state.setToken)
+  const setToken = useTokenStore((state) => state.setToken);
 
-  const emailRef = useRef<HTMLInputElement>(null)
-  const passwordRef = useRef<HTMLInputElement>(null)
-
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   //mutation
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (response) => {
-      console.log("login successful");
+      if (config.isDevelopment) {
+        console.log("Login successful");
+      }
       setToken(response.accessToken);
       navigate("/dashboard");
     },
     onError: (error) => {
-      console.log("Error:", error);
+      if (config.isDevelopment) {
+        console.log("Error:", error);
+      }
     },
   });
 
-
-
   const handleLoginSubmit = () => {
-    const email = emailRef.current?.value
-    const password = passwordRef.current?.value
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
 
     //make server call
     if (!email || !password) {
-      return alert("Please enter email and password")
+      return alert("Please enter email and password");
     }
 
-    mutation.mutate({ email, password })
-  }
+    mutation.mutate({ email, password });
+  };
 
   return (
     <div className="w-full mx-auto  xl:min-h-[800px]">
@@ -58,7 +58,7 @@ export function LoginPage() {
               <br />
               {mutation.isError && (
                 <span className="text-red-500 text-sm">
-                   {mutation.error?.message || "An error occurred"}
+                  {mutation.error?.message || "An error occurred"}
                 </span>
               )}
             </p>
@@ -86,9 +86,18 @@ export function LoginPage() {
               </div>
               <Input ref={passwordRef} id="password" type="password" required />
             </div>
-            <Button onClick={handleLoginSubmit} type="submit" className="w-full" disabled={mutation.isPending}>
-              <Loader className={cn(mutation.isPending ? "animate-spin" : "hidden")} />
-              <span className={cn(mutation.isPending ? "hidden" : "block")}>Login</span>
+            <Button
+              onClick={handleLoginSubmit}
+              type="submit"
+              className="w-full"
+              disabled={mutation.isPending}
+            >
+              <Loader
+                className={cn(mutation.isPending ? "animate-spin" : "hidden")}
+              />
+              <span className={cn(mutation.isPending ? "hidden" : "block")}>
+                Login
+              </span>
             </Button>
             <Button variant="outline" className="w-full">
               Login with Google
@@ -103,5 +112,5 @@ export function LoginPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

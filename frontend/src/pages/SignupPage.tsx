@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import config from "@/config/config";
 import { register } from "@/http/api";
 import { cn } from "@/lib/utils";
 import useTokenStore from "@/store";
@@ -11,40 +12,43 @@ import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  const setToken = useTokenStore((state) => state.setToken);
 
-  const setToken = useTokenStore((state) => state.setToken)
-
-  const nameRef = useRef<HTMLInputElement>(null)
-  const emailRef = useRef<HTMLInputElement>(null)
-  const passwordRef = useRef<HTMLInputElement>(null)
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const mutation = useMutation({
     mutationFn: register,
     onSuccess: (response) => {
-      console.log("signup successful")
-      setToken(response.accessToken)
+      if (config.isDevelopment) {
+        console.log("signup successful");
+      }
+      setToken(response.accessToken);
       //redirect to dashboard
-      navigate('/dashboard')
+      navigate("/dashboard");
     },
     onError: (error) => {
-      console.log("Error:", error);
+      if (config.isDevelopment) {
+        console.log("Error:", error);
+      }
     },
-  })
+  });
 
   const handleSignupSubmit = () => {
-    const name = nameRef.current?.value
-    const email = emailRef.current?.value
-    const password = passwordRef.current?.value
+    const name = nameRef.current?.value;
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
 
     //make server call
     if (!name || !email || !password) {
-      return alert("Please enter all fields")
+      return alert("Please enter all fields");
     }
 
-    mutation.mutate({ name, email, password })
-  }
+    mutation.mutate({ name, email, password });
+  };
 
   return (
     <div className="w-full xl:min-h-[800px]">
@@ -56,19 +60,28 @@ const SignupPage = () => {
               Enter your username, email and password below to register to your
               account
               <br />
-              
-              {mutation.isError && <span className="text-red-500 text-sm">{mutation.error?.message || "An error occurred"}</span>}
+              {mutation.isError && (
+                <span className="text-red-500 text-sm">
+                  {mutation.error?.message || "An error occurred"}
+                </span>
+              )}
             </p>
           </div>
           <div className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
-              <Input ref={nameRef} id="name" type="name" placeholder="m" required />
+              <Input
+                ref={nameRef}
+                id="name"
+                type="name"
+                placeholder="m"
+                required
+              />
             </div>
             <div className="grid gap-2">
-              <Label  htmlFor="email">Email</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
-              ref={emailRef}
+                ref={emailRef}
                 id="email"
                 type="email"
                 placeholder="m@example.com"
@@ -87,9 +100,15 @@ const SignupPage = () => {
               </div>
               <Input ref={passwordRef} id="password" type="password" required />
             </div>
-            <Button onClick={handleSignupSubmit} type="submit" className="w-full">
-              <Loader className={cn(mutation.isPending? "animate-spin" : "hidden")} />
-              <span className={cn(mutation.isPending? "hidden" : "block")}>
+            <Button
+              onClick={handleSignupSubmit}
+              type="submit"
+              className="w-full"
+            >
+              <Loader
+                className={cn(mutation.isPending ? "animate-spin" : "hidden")}
+              />
+              <span className={cn(mutation.isPending ? "hidden" : "block")}>
                 Sign up
               </span>
             </Button>
