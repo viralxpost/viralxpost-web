@@ -44,7 +44,9 @@ const createTweets = async (
       .status(201)
       .json({ message: "tweet created successfully", tweet: newTweet });
   } catch (error) {
-    return next(createHttpError(500, "Something went wrong"));
+    return next(
+      createHttpError(500, "Failed to create tweet. Please try again later.")
+    );
   }
 };
 
@@ -64,12 +66,16 @@ const getAllTweets = async (
       .populate("user", "name");
 
     if (!tweets || tweets.length === 0) {
-      return next(createHttpError(404, "No tweets found"));
+      return next(
+        createHttpError(404, "No tweets found for the current user.")
+      );
     }
 
     res.status(200).json({ tweets });
   } catch (error) {
-    next(createHttpError(500, "Something went wrong"));
+    next(
+      createHttpError(500, "Failed to fetch tweets. Please try again later.")
+    );
   }
 };
 
@@ -112,7 +118,9 @@ const createThreads = async (
       .status(201)
       .json({ message: "Thread created successfully", thread: newThread });
   } catch (error) {
-    return next(createHttpError(500, "Something went wrong"));
+    return next(
+      createHttpError(500, "Failed to create thread. Please try again later.")
+    );
   }
 };
 
@@ -137,7 +145,9 @@ const getAllThreads = async (
 
     res.status(200).json({ threads });
   } catch (error) {
-    next(createHttpError(500, "Something went wrong"));
+    next(
+      createHttpError(500, "Failed to fetch thread. Please try again later.")
+    );
   }
 };
 
