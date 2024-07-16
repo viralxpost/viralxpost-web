@@ -13,5 +13,5 @@ export const login = async (data: { email: string; password: string }) => {
 };
 
 export const register = async (data: {name: string, email: string; password: string }) => {
-  api.post("/api/v0/users/register", data);
+  return api.post("/api/v0/users/register", data);
 }

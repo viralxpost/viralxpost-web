@@ -14,6 +14,7 @@ import { ArrowRightIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const HomePage = () => {
+ 
   return (
     <Container>
       <div className="z-10 translate-y-[-1rem] mt-24 animate-fade-in opacity-0 [--animation-delay:100ms] flex lg:min-h-[10rem] md:min-h-[7rem] min-h-[5rem] items-center justify-center">

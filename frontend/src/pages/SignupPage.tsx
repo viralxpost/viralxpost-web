@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { register } from "@/http/api";
 import { cn } from "@/lib/utils";
+import useTokenStore from "@/store";
 import { useMutation } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 
@@ -13,14 +14,17 @@ const SignupPage = () => {
 
   const navigate = useNavigate()
 
+  const setToken = useTokenStore((state) => state.setToken)
+
   const nameRef = useRef<HTMLInputElement>(null)
   const emailRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
 
   const mutation = useMutation({
     mutationFn: register,
-    onSuccess: () => {
+    onSuccess: (response) => {
       console.log("signup successful")
+      setToken(response.data.accessToken)
       //redirect to dashboard
       navigate('/dashboard')
     }
@@ -55,7 +59,7 @@ const SignupPage = () => {
           </div>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="email">Name</Label>
+              <Label htmlFor="name">Name</Label>
               <Input ref={nameRef} id="name" type="name" placeholder="m" required />
             </div>
             <div className="grid gap-2">

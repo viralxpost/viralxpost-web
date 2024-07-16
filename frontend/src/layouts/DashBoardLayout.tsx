@@ -25,11 +25,19 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Link, NavLink, Outlet } from "react-router-dom"
+import { Link, NavLink, Navigate, Outlet } from "react-router-dom"
 import Logo from "@/components/icons/Logo"
 import { TwitterLogoIcon } from "@radix-ui/react-icons"
+import useTokenStore from "@/store"
 
 const DashBoardLayout = () => {
+
+  const token = useTokenStore(state => state.token)
+
+  if(!token) {
+    return <Navigate to="/auth/login" replace/>
+  }
+
   return (
    
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
