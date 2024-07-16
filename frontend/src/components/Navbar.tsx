@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import Logo from "./icons/Logo";
+import useTokenStore from "@/store";
 
 const Navbar = () => {
+  const token = useTokenStore((state) => state.token)
+
   return (
     <nav className="fixed top-0 z-10 w-full backdrop-blur-[12px]">
       <div className="flex justify-between items-center p-3 md:px-4 lg:px-28">
@@ -21,7 +24,10 @@ const Navbar = () => {
         </div>
 
         <div className="flex gap-2">
-          <Link to="/auth/login">
+        {
+          !token ? (
+            <>
+            <Link to="/auth/login">
             <Button variant="link" size="sm" className="md:text-sm text-[13px]">
               Login
             </Button>
@@ -32,6 +38,15 @@ const Navbar = () => {
               Sign up
             </Button>
           </Link>
+            </>
+          ) : 
+              (<Link to="/auth/login">
+            <Button size="sm" className="md:text-sm text-[13px]">
+              Get Started
+            </Button>
+          </Link>)
+          
+        }
         </div>
       </div>
     </nav>
