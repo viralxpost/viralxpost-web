@@ -89,7 +89,7 @@ const Navbar = () => {
         <div
           className={`md:hidden ${
             showMenu ? "block" : "hidden"
-          } absolute top-16 left-0 w-full h-screen shadow-lg rounded-lg py-2  backdrop-blur-[12px]`}
+          } absolute top-16 left-0 w-full h-screen shadow-lg rounded-lg py-2 bg-black bg-opacity-20 backdrop-blur-[12px]`}
         >
           <div className="flex flex-col gap-3">
             <Link
@@ -134,7 +134,7 @@ const Navbar = () => {
         </div>
 
         {/* Authentication buttons (right side for larger screens) */}
-        <div className="flex gap-2 md:flex hidden">
+        <div className="gap-2 md:flex hidden">
           {!token ? (
             <>
               <Link to="/auth/login">
