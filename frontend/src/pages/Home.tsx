@@ -18,9 +18,9 @@ const Home = () => {
             You can generate your first X post using ai.
           </p>
           <Link to="/dashboard/tweet">
-          <Button className="mt-4 flex gap-3">
-            <MagicWandIcon /> Generate
-          </Button>
+            <Button className="mt-4 flex gap-3">
+              <MagicWandIcon /> Generate
+            </Button>
           </Link>
         </div>
       </div>

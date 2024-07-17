@@ -1,66 +1,62 @@
 import {
-    CircleUser,
-    Cuboid,
-    Feather,
-    GalleryHorizontalEnd,
-    GalleryVertical,
-    Lightbulb,
-    LineChart,
-    Menu,
-    Search,
-  } from "lucide-react"
-  import { Button } from "@/components/ui/button"
-  import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-  } from "@/components/ui/card"
-  import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
+  CircleUser,
+  Cuboid,
+  Feather,
+  GalleryHorizontalEnd,
+  GalleryVertical,
+  Lightbulb,
+  LineChart,
+  Menu,
+  Search,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-import { Input } from "@/components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Link, NavLink, Navigate, Outlet } from "react-router-dom"
-import Logo from "@/components/icons/Logo"
-import { TwitterLogoIcon } from "@radix-ui/react-icons"
-import useTokenStore from "@/store"
+import { Input } from "@/components/ui/input";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
+import Logo from "@/components/icons/Logo";
+import { TwitterLogoIcon } from "@radix-ui/react-icons";
+import useTokenStore from "@/store";
 
 const DashBoardLayout = () => {
+  const token = useTokenStore((state) => state.token);
 
-  const token = useTokenStore(state => state.token)
-
-  if(!token) {
-    return <Navigate to="/auth/login" replace/>
+  if (!token) {
+    return <Navigate to="/auth/login" replace />;
   }
 
   return (
-   
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-4">
           <div className="flex h-20 items-center px-4 lg:px-6">
             <Link to="/" className="flex items-center gap-2 font-semibold">
-              <Logo width="30"/>
+              <Logo width="30" />
             </Link>
-            
           </div>
           <div className="flex-1">
             <nav className="grid mt-6 gap-2 items-start px-4 text-sm font-medium">
-             
               <NavLink
                 to="/dashboard/tweet"
                 className={({ isActive }) => {
-                    return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
-                    }`;
+                  return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                    isActive && "bg-muted"
+                  }`;
                 }}
               >
                 <TwitterLogoIcon className="h-4 w-4" />
@@ -69,9 +65,9 @@ const DashBoardLayout = () => {
               <NavLink
                 to="/dashboard/all-tweets"
                 className={({ isActive }) => {
-                    return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
-                    }`;
+                  return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                    isActive && "bg-muted"
+                  }`;
                 }}
               >
                 <GalleryVertical className="h-4 w-4" />
@@ -80,9 +76,9 @@ const DashBoardLayout = () => {
               <NavLink
                 to="/dashboard/thread"
                 className={({ isActive }) => {
-                    return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
-                    }`;
+                  return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                    isActive && "bg-muted"
+                  }`;
                 }}
               >
                 <Feather className="h-4 w-4" />
@@ -91,9 +87,9 @@ const DashBoardLayout = () => {
               <NavLink
                 to="/dashboard/all-threads"
                 className={({ isActive }) => {
-                    return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
-                    }`;
+                  return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                    isActive && "bg-muted"
+                  }`;
                 }}
               >
                 <GalleryHorizontalEnd className="h-4 w-4" />
@@ -102,21 +98,21 @@ const DashBoardLayout = () => {
               <NavLink
                 to="/dashboard/idea"
                 className={({ isActive }) => {
-                    return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
-                    }`;
+                  return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                    isActive && "bg-muted"
+                  }`;
                 }}
               >
                 <Lightbulb className="h-4 w-4" />
                 Idea generate
               </NavLink>
-              
+
               <NavLink
                 to="/dashboard/all-ideas"
                 className={({ isActive }) => {
-                    return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
-                    }`;
+                  return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                    isActive && "bg-muted"
+                  }`;
                 }}
               >
                 <Cuboid className="h-4 w-4" />
@@ -125,9 +121,9 @@ const DashBoardLayout = () => {
               <NavLink
                 to="/dashboard/analytics"
                 className={({ isActive }) => {
-                    return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
-                    }`;
+                  return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                    isActive && "bg-muted"
+                  }`;
                 }}
               >
                 <LineChart className="h-4 w-4" />
@@ -153,7 +149,6 @@ const DashBoardLayout = () => {
           </div>
         </div>
       </div>
-      
 
       {/* mobile */}
       <div className="flex flex-col">
@@ -170,89 +165,86 @@ const DashBoardLayout = () => {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col">
-                <Logo width="30" className="mb-10"/>
+              <Logo width="30" className="mb-10" />
               <nav className="grid gap-2 font-medium">
-              
-              <NavLink
-                to="/dashboard/tweet"
-                className={({ isActive }) => {
+                <NavLink
+                  to="/dashboard/tweet"
+                  className={({ isActive }) => {
                     return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
+                      isActive && "bg-muted"
                     }`;
-                }}
-              >
-                <TwitterLogoIcon className="h-4 w-4" />
-                Tweet generate
-               
-              </NavLink>
-              <NavLink
-                to="/dashboard/all-tweets"
-                className={({ isActive }) => {
+                  }}
+                >
+                  <TwitterLogoIcon className="h-4 w-4" />
+                  Tweet generate
+                </NavLink>
+                <NavLink
+                  to="/dashboard/all-tweets"
+                  className={({ isActive }) => {
                     return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
+                      isActive && "bg-muted"
                     }`;
-                }}
-              >
-                <GalleryVertical className="h-4 w-4" />
-                All Tweets
-               
-              </NavLink>
-              <NavLink
-                to="/dashboard/thread"
-                className={({ isActive }) => {
+                  }}
+                >
+                  <GalleryVertical className="h-4 w-4" />
+                  All Tweets
+                </NavLink>
+                <NavLink
+                  to="/dashboard/thread"
+                  className={({ isActive }) => {
                     return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
+                      isActive && "bg-muted"
                     }`;
-                }}
-              >
-                <Feather className="h-4 w-4" />
-                Thread generate{" "}
-              </NavLink>
-              <NavLink
-                to="/dashboard/all-threads"
-                className={({ isActive }) => {
+                  }}
+                >
+                  <Feather className="h-4 w-4" />
+                  Thread generate{" "}
+                </NavLink>
+                <NavLink
+                  to="/dashboard/all-threads"
+                  className={({ isActive }) => {
                     return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
+                      isActive && "bg-muted"
                     }`;
-                }}
-              >
-                <GalleryHorizontalEnd className="h-4 w-4" />
-                All Threads
-               
-              </NavLink>
+                  }}
+                >
+                  <GalleryHorizontalEnd className="h-4 w-4" />
+                  All Threads
+                </NavLink>
 
-              <NavLink
-                to="/dashboard/idea"
-                className={({ isActive }) => {
+                <NavLink
+                  to="/dashboard/idea"
+                  className={({ isActive }) => {
                     return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
+                      isActive && "bg-muted"
                     }`;
-                }}
-              >
-                <Lightbulb className="h-4 w-4" />
-                Idea generate
-              </NavLink>
-              <NavLink
-                to="/dashboard/all-ideas"
-                className={({ isActive }) => {
+                  }}
+                >
+                  <Lightbulb className="h-4 w-4" />
+                  Idea generate
+                </NavLink>
+                <NavLink
+                  to="/dashboard/all-ideas"
+                  className={({ isActive }) => {
                     return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
+                      isActive && "bg-muted"
                     }`;
-                }}
-              >
-                <Cuboid className="h-4 w-4" />
-                Ideas
-              </NavLink>
-              <NavLink
-                to="/dashboard/analytics"
-                className={({ isActive }) => {
+                  }}
+                >
+                  <Cuboid className="h-4 w-4" />
+                  Ideas
+                </NavLink>
+                <NavLink
+                  to="/dashboard/analytics"
+                  className={({ isActive }) => {
                     return `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
-                        isActive && 'bg-muted'
+                      isActive && "bg-muted"
                     }`;
-                }}
-              ><LineChart className="h-4 w-4" />
-              Analytics
-            </NavLink>
+                  }}
+                >
+                  <LineChart className="h-4 w-4" />
+                  Analytics
+                </NavLink>
               </nav>
               <div className="mt-auto">
                 <Card>
@@ -302,11 +294,11 @@ const DashBoardLayout = () => {
           </DropdownMenu>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <Outlet/>
+          <Outlet />
         </main>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DashBoardLayout
+export default DashBoardLayout;
