@@ -89,7 +89,7 @@ const Navbar = () => {
         <div
           className={`md:hidden ${
             showMenu ? "block" : "hidden"
-          } absolute top-16 left-0 w-full h-screen shadow-lg rounded-lg py-2 bg-black bg-opacity-20 backdrop-blur-[12px]`}
+          } absolute top-16 left-0 w-full h-screen shadow-lg rounded-lg py-2 bg-black`}
         >
           <div className="flex flex-col gap-3">
             <Link
