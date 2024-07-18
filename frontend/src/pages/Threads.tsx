@@ -14,7 +14,7 @@ import config from "@/config/config";
 import { getAllThreads, Thread } from "@/http/api";
 import { useQuery } from "@tanstack/react-query";
 
-import { PlusCircle } from "lucide-react";
+import { Loader, PlusCircle } from "lucide-react";
 
 const Threads = () => {
   const { data, error, isLoading } = useQuery<{ threads: Thread[] }, Error>({
@@ -23,6 +23,11 @@ const Threads = () => {
   });
   if (config.isDevelopment) {
     console.log(data);
+  }
+
+
+  if (isLoading) {
+    return <div className="flex items-center justify-center h-screen"><Loader className="animate-spin" /></div>;
   }
 
   return (
@@ -64,8 +69,7 @@ const Threads = () => {
             </div>
             <TabsContent value="all"></TabsContent>
           </Tabs>
-          {isLoading && <div>Loading...</div>}
-          {error && <div>Error loading tweets: {error.message}</div>}
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {data?.threads && data.threads.length > 0 ? (
               data.threads.map((thread, index) => {
@@ -76,7 +80,7 @@ const Threads = () => {
                 return <ThreadCard key={key} thread={thread} />;
               })
             ) : (
-              <div>No threads available</div>
+              error && <div>{error.message}</div>
             )}
           </div>
         </main>
