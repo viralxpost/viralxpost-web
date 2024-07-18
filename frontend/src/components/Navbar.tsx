@@ -64,7 +64,7 @@ const Navbar = () => {
             className="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
           >
             <svg
-              className="h-6 w-6 fill-current"
+              className="h-7 w-7 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
@@ -95,28 +95,28 @@ const Navbar = () => {
             <Link
               to="/about"
               onClick={toggleMenu}
-              className="py-1 px-4 hover:text-gray-200"
+              className="py-1 px-4 hover:text-gray-200 underline"
             >
               About
             </Link>
             <Link
               to="/features"
               onClick={toggleMenu}
-              className="py-1 px-4 hover:text-gray-200"
+              className="py-1 px-4 hover:text-gray-200 underline"
             >
               Features
             </Link>
             <Link
               to="/blog"
               onClick={toggleMenu}
-              className="py-1 px-4 hover:text-gray-200"
+              className="py-1 px-4 hover:text-gray-200 underline"
             >
               Blog
             </Link>
             <Link
               to="/pricing"
               onClick={toggleMenu}
-              className="py-1 px-4 hover:text-gray-200"
+              className="py-1 px-4 hover:text-gray-200 underline"
             >
               Pricing
             </Link>
@@ -127,10 +127,18 @@ const Navbar = () => {
 
         {/* Menu items (left side for larger screens) */}
         <div className="md:flex text-sm lg:text-base md:gap-8 lg:gap-10 hidden">
-          <Link to="/about">About</Link>
-          <Link to="/features">Features</Link>
-          <Link to="/blog">Blog</Link>
-          <Link to="/pricing">Pricing</Link>
+          <Link className="hover:underline" to="/about">
+            About
+          </Link>
+          <Link className="hover:underline" to="/features">
+            Features
+          </Link>
+          <Link className="hover:underline" to="/blog">
+            Blog
+          </Link>
+          <Link className="hover:underline" to="/pricing">
+            Pricing
+          </Link>
         </div>
 
         {/* Authentication buttons (right side for larger screens) */}
