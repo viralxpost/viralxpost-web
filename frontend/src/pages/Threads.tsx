@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import config from "@/config/config";
 import { getAllThreads, Thread } from "@/http/api";
 import { useQuery } from "@tanstack/react-query";
 
@@ -20,8 +21,10 @@ const Threads = () => {
     queryKey: ["threads"],
     queryFn: getAllThreads,
   });
+  if (config.isDevelopment) {
+    console.log(data);
+  }
 
-  console.log(data);
   return (
     <>
       <div className="flex"></div>
