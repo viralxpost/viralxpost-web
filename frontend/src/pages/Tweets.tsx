@@ -16,7 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { PlusCircle } from "lucide-react";
 
 const Tweets = () => {
-  const { data, error, isLoading } = useQuery<{ tweets: Tweet[] }, Error>({
+  const { data } = useQuery<{ tweets: Tweet[] }, Error>({
     queryKey: ["tweets"],
     queryFn: getAllTweets,
   });
