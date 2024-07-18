@@ -68,9 +68,13 @@ const Tweets = () => {
           {error && <div>Error loading tweets: {error.message}</div>}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {data?.tweets && data.tweets.length > 0 ? (
-              data.tweets.map((tweet) => (
-                <TweetCard key={tweet.id} tweet={tweet} />
-              ))
+              data.tweets.map((tweet, index) => {
+                const key = tweet.id || index;
+                if (config.isDevelopment) {
+                  console.log(`Tweet Key: ${key}`);
+                }
+                return <TweetCard key={key} tweet={tweet} />;
+              })
             ) : (
               <div>No tweets available</div>
             )}

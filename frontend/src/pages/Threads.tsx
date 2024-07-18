@@ -68,11 +68,15 @@ const Threads = () => {
           {error && <div>Error loading tweets: {error.message}</div>}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {data?.threads && data.threads.length > 0 ? (
-              data.threads.map((tweet) => (
-                <ThreadCard key={tweet.id} thread={tweet} />
-              ))
+              data.threads.map((thread, index) => {
+                const key = thread.id || index;
+                if (config.isDevelopment) {
+                  console.log(`Thread Key: ${key}`);
+                }
+                return <ThreadCard key={key} thread={thread} />;
+              })
             ) : (
-              <div>No tweets available</div>
+              <div>No threads available</div>
             )}
           </div>
         </main>
