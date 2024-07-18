@@ -14,7 +14,7 @@ import config from "@/config/config";
 import { getAllTweets, Tweet } from "@/http/api";
 import { useQuery } from "@tanstack/react-query";
 
-import { PlusCircle } from "lucide-react";
+import { Loader, PlusCircle } from "lucide-react";
 
 const Tweets = () => {
   const { data, error, isLoading } = useQuery<{ tweets: Tweet[] }, Error>({
@@ -23,6 +23,10 @@ const Tweets = () => {
   });
   if (config.isDevelopment) {
     console.log(data);
+  }
+
+  if (isLoading) {
+    return <div className="flex items-center justify-center h-screen"><Loader className="animate-spin"/></div>;
   }
 
   return (
@@ -64,8 +68,8 @@ const Tweets = () => {
             </div>
             <TabsContent value="all"></TabsContent>
           </Tabs>
-          {isLoading && <div>Loading...</div>}
-          {error && <div>Error loading tweets: {error.message}</div>}
+          
+          
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {data?.tweets && data.tweets.length > 0 ? (
               data.tweets.map((tweet, index) => {
@@ -76,7 +80,7 @@ const Tweets = () => {
                 return <TweetCard key={key} tweet={tweet} />;
               })
             ) : (
-              <div>No tweets available</div>
+              error && <div>{error.message}</div>
             )}
           </div>
         </main>
