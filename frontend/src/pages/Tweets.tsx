@@ -61,6 +61,8 @@ const Tweets = () => {
             </div>
             <TabsContent value="all"></TabsContent>
           </Tabs>
+          {isLoading && <div>Loading...</div>}
+          {error && <div>Error loading tweets: {error.message}</div>}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {data?.tweets && data.tweets.length > 0 ? (
               data.tweets.map((tweet) => (
