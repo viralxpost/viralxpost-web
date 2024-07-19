@@ -69,10 +69,10 @@ const GenerateTweet = () => {
                     </SelectContent>
                   </Select>
                 </div>
+              </fieldset>
                 <Button>
                   Generate Tweet
                 </Button>
-              </fieldset>
             </form>
 
           </div>
