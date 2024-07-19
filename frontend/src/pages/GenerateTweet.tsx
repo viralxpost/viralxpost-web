@@ -14,10 +14,10 @@ const GenerateTweet = () => {
         className="flex flex-1 rounded-lg border border-dashed shadow-sm">
         <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
           <div
-            className="relative hidden flex-col items-start gap-8 md:flex" x-chunk="dashboard-03-chunk-0"
+            className="relative grid flex-col items-start gap-8 md:flex" x-chunk="dashboard-03-chunk-0"
           >
             <form className="grid w-full items-start gap-6">
-              
+
               <fieldset className="grid gap-6 rounded-lg border p-4">
                 <legend className="-ml-1 px-1 text-sm font-medium">
                   Messages
@@ -26,8 +26,8 @@ const GenerateTweet = () => {
                   <Label htmlFor="content">Tweet Description</Label>
                   <Textarea
                     id="content"
-                    placeholder="You are a..."
-                    className="min-h-[9.5rem]"
+                    placeholder="How to build a saas..."
+                    className="min-h-[25.5rem]"
                   />
                 </div>
                 <div className="grid gap-3">
@@ -43,15 +43,42 @@ const GenerateTweet = () => {
                     </SelectContent>
                   </Select>
                 </div>
+                <div className="grid gap-3">
+                  <Label htmlFor="role">Tone of Voice</Label>
+                  <Select defaultValue="default">
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="default">Default</SelectItem>
+                      <SelectItem value="user">User</SelectItem>
+                      <SelectItem value="assistant">Assistant</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid gap-3">
+                  <Label htmlFor="role">Domain</Label>
+                  <Select defaultValue="default">
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="default">Default</SelectItem>
+                      <SelectItem value="user">User</SelectItem>
+                      <SelectItem value="assistant">Assistant</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button>
+                  Generate Tweet
+                </Button>
               </fieldset>
-              <Button>
-                Generate Tweet
-              </Button>
             </form>
+
           </div>
-          <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
+          <div className="relative md:flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
             <Badge variant="outline" className="absolute right-3 top-3">
-              Output
+              Generated Tweet
             </Badge>
           </div>
         </main>
