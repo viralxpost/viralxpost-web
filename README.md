@@ -38,11 +38,11 @@ Setting up the `.env` files is crucial for the project. These files store all th
 1. **Separate .env Files for Frontend and Backend**: The project uses two separate `.env` files, one for the frontend and another for the backend. Make sure to set up both configuration files properly.
     Ensure that both the frontend and backend configurations are set up correctly before proceeding with the installation.
 
-2. **Copy the sample environment file**: The repository includes sample environment files named `.env.frontend.sample`, and `.env.backend.sample`. Copy these files to create your own `.env` files.
+2. **Copy the sample environment file**: The repository includes sample environment files named `.env.frontend.sample` (in the frontend directory), and `.env.backend.sample` (in the root directory). Copy these files to create your own `.env` files.
 
     ```sh
-    cp .env.sample.frontend .env (in the frontend directory)
-    cp .env.sample.backend .env  (in the backend directory)
+    cp .env.sample.frontend .env 
+    cp .env.sample.backend .env  
     ```
 
 3. **Edit the `.env` files**: Open each `.env` file in a text editor and replace the placeholder values with your actual API keys and configuration settings. You may need to add multiple API keys depending on the services your project integrates with.
