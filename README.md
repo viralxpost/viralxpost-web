@@ -26,30 +26,36 @@ Before you begin setting up the project, ensure you have the following software 
 
 3. **Git**: Git is used for version control. If you don't have it installed, you can download it from the [official Git website](https://git-scm.com/).
 
-4. **Operating System**: The setup instructions provided are applicable for Linux, macOS, and Windows. Ensure you follow the steps specific to your OS for optimal setup.
+4. **MongoDB**: MongoDB must be installed according to your operating system. Follow the installation instructions from the [official MongoDB website](https://www.mongodb.com/try/download/community).
 
-### Environment Configuration
+5. **Postman** (optional but recommended): Postman is useful for testing APIs and backend endpoints. You can download it from the [official Postman website](https://www.postman.com/downloads/).
+   
 
-Setting up the `.env` file is crucial for the project. It stores all the necessary environment variables required for the application to run, such as API keys and configuration settings. Follow these steps:
+## Environment Configuration
 
-1. **Copy the sample environment file**: The repository includes a sample environment file named `.env.sample`. Copy this file to create your own `.env` file.
+Setting up the `.env` files is crucial for the project. These files store all the necessary environment variables required for the application to run, such as API keys and configuration settings. Follow these steps:
+
+1. **Separate .env Files for Frontend and Backend**: The project uses two separate `.env` files, one for the frontend and another for the backend. Make sure to set up both configuration files properly.
+    Ensure that both the frontend and backend configurations are set up correctly before proceeding with the installation.
+
+2. **Copy the sample environment file**: The repository includes sample environment files named `.env.frontend.sample`, and `.env.backend.sample`. Copy these files to create your own `.env` files.
 
     ```sh
-    cp .env.sample .env
+    cp .env.sample.frontend .env (in the frontend directory)
+    cp .env.sample.backend .env  (in the backend directory)
     ```
 
-2. **Edit the `.env` file**: Open the `.env` file in a text editor and replace the placeholder values with your actual API keys and configuration settings. You may need to add multiple API keys depending on the services your project integrates with.
+3. **Edit the `.env` files**: Open each `.env` file in a text editor and replace the placeholder values with your actual API keys and configuration settings. You may need to add multiple API keys depending on the services your project integrates with.
 
     ```env
     # Example .env file
-    API_KEY=your_api_key_here
-    API_SECRET=your_api_secret_here
     DB_CONNECTION_STRING=your_database_connection_string_here
     ```
 
-    Replace `your_api_key_here`, `your_api_secret_here`, and `your_database_connection_string_here` with your actual credentials and configuration values.
+    Replace `your_database_connection_string_here` with your actual credentials and configuration value.
 
-Make sure you have all the required API keys and configurations set up correctly before proceeding with the installation.
+By following these steps, you will have your environment configurations properly set up for both the frontend and backend of your project.
+
 
 
 
@@ -86,7 +92,8 @@ In the project directory, you can run:
 - `npm backend` : Starts the backend server using `nodemon` with `backend/server.ts`.
 - `npm frontend` : Starts the frontend development server from the `frontend` directory.
 - `npm run dev` : Runs both frontend and backend concurrently using `concurrently`.
----
+
+
 ## Learning Resources
 - [Reactjs](https://react.dev/)
 - [Node](https://nodejs.org/en)
