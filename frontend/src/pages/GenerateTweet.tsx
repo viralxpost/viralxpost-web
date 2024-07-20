@@ -19,6 +19,7 @@ const formats = [
   {
     label: "Quick Tips",
     template: `Tech tip: {Brief description of the tech tip}
+    
 Here's how to do it:
 
 1. {Step 1}
@@ -53,15 +54,89 @@ Key points:
 
 {Takeaway Message} {Call to action}`
   },
-  // Add other formats similarly
+  {
+    label: "Tech How-To",
+    template: `Want to {action}?
+
+Here's a simple guide:
+
+1. {Step 1}
+2. {Step 2}
+3. {Step 3}
+
+Follow for more tech tips! {Call to action}`
+  },
+  {
+    label: "Best Tools",
+    template: `Top tools for {task}:
+
+1. {Tool 1} - {Brief description}
+2. {Tool 2} - {Brief description}
+3. {Tool 3} - {Brief description}
+
+{Takeaway Message} {Call to action}`
+  },
+  {
+    label: "Tech Challenges",
+    template: `Struggling with {common tech problem}?
+
+Here are 3 solutions:
+
+1. {Solution 1}
+2. {Solution 2}
+3. {Solution 3}
+
+{Takeaway Message} {Call to action}`
+  },
+  {
+    label: "Predictions",
+    template: `Future of {tech field}: 
+
+1. {Prediction 1}
+2. {Prediction 2}
+3. {Prediction 3}
+
+What do you think? {Call to action}`
+  },
+  {
+    label: "Fun Facts",
+    template: `Did you know? {Tech fun fact}
+
+1. {Fact 1}
+2. {Fact 2}
+3. {Fact 3}
+
+{Takeaway Message} {Call to action}`
+  },
+  {
+    label: "Tech Comparisons",
+    template: `{Tech 1} vs {Tech 2}
+
+Which is better?
+
+1. {Comparison point 1}
+2. {Comparison point 2}
+3. {Comparison point 3}
+
+{Takeaway Message} {Call to action}`
+  },
+  {
+    label: "Inspirational Tech Quotes",
+    template: `“{Inspirational tech quote}” - {Author}
+
+Why it matters: {Brief explanation}
+
+{Takeaway Message} {Call to action}`
+  },
 ];
+
 
 const GenerateTweet = () => {
   const [description, setDescription] = useState("");
-  const [format, setFormat] = useState("default");
-  const [tone, setTone] = useState("default");
-  const [domain, setDomain] = useState("default");
-  const [generatedTweets, setGeneratedTweets] = useState<string[]>([]);
+  const [format, setFormat] = useState("");
+  const [tone, setTone] = useState("");
+  const [domain, setDomain] = useState("");
+  const [generatedTweets, setGeneratedTweets] = useState("");
 
   const { mutateAsync, error, data } = useMutation({
     mutationFn: generateTweet,
@@ -70,7 +145,7 @@ const GenerateTweet = () => {
   useEffect(() => {
     if (data) {
       const tweetContent = data.tweet.content;
-      setGeneratedTweets((prevTweets) => [...prevTweets, tweetContent]);
+      setGeneratedTweets(tweetContent);
     }
   }, [data]);
 
@@ -122,6 +197,7 @@ const GenerateTweet = () => {
                 <legend className="-ml-1 px-1 text-sm font-medium">
                   Messages
                 </legend>
+                
                 <div className="grid gap-3">
                   <Label htmlFor="content">Tweet Description</Label>
                   <Textarea
@@ -131,6 +207,17 @@ const GenerateTweet = () => {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
+                </div>
+                <div className="grid gap-3">
+                  <Label htmlFor="domain">Domain</Label>
+                  <Select onValueChange={handleDomain} defaultValue={domain}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a domain" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="tech">Tech</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="role">Tweet Format</Label>
@@ -154,26 +241,17 @@ const GenerateTweet = () => {
                       <SelectValue placeholder="Select a tone" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="default">Default</SelectItem>
+                      <SelectItem value="funny">Funny</SelectItem>
                       <SelectItem value="casual">Casual</SelectItem>
+                      <SelectItem value="encouraging">Encouraging</SelectItem>
                       <SelectItem value="professional">Professional</SelectItem>
+                      <SelectItem value="informative">Informative</SelectItem>
+                      <SelectItem value="creative">Creative</SelectItem>
+                      <SelectItem value="passionate">Passionate</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="domain">Domain</Label>
-                  <Select onValueChange={handleDomain} defaultValue={domain}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a domain" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="default">Default</SelectItem>
-                      <SelectItem value="tech">Tech</SelectItem>
-                      <SelectItem value="finance">Finance</SelectItem>
-                      <SelectItem value="health">Health</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                
               </fieldset>
               <Button type="submit">Generate Tweet</Button>
             </form>
@@ -183,16 +261,10 @@ const GenerateTweet = () => {
               Generated Tweet
             </Badge>
             <div>
-              {generatedTweets.length > 0 ? (
-                generatedTweets.map((tweet, index) => (
-                  <div key={index} className="mt-4">
-                    <p>{tweet}</p>
-                  </div>
-                ))
+            {generatedTweets ? (
+                <p className="mt-5">{generatedTweets}</p>
               ) : (
-                <div className="mt-4">
-                  <p>No tweet generated yet.</p>
-                </div>
+                <p className="mt-5">No tweet generated yet. Please generate a tweet by filling out the form above.</p>
               )}
             </div>
             {error && <div className="mt-4 text-red-500">{error.message}</div>}
