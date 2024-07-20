@@ -11,9 +11,17 @@ import { Tweet } from "@/http/api";
 
 interface TweetCardProps {
   tweet: Tweet;
+  onDelete: (id: string) => void;
 }
 
-export function TweetCard({ tweet }: TweetCardProps) {
+export function TweetCard({ tweet, onDelete }: TweetCardProps) {
+  const handleDelete = () => {
+    if (tweet._id) {
+      onDelete(tweet._id);
+    } else {
+      console.error("Tweet id is missing.");
+    }
+  };
   return (
     <Card className="">
       <CardHeader>
@@ -21,7 +29,9 @@ export function TweetCard({ tweet }: TweetCardProps) {
       </CardHeader>
       <CardContent>{tweet.content}</CardContent>
       <CardFooter className=" justify-end">
-        <Button variant="destructive">Delete</Button>
+        <Button variant="destructive" onClick={handleDelete}>
+          Delete
+        </Button>
       </CardFooter>
     </Card>
   );
