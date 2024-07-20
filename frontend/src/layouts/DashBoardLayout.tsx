@@ -28,13 +28,37 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
+import { Link, NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
 import Logo from "@/components/icons/Logo";
 import { TwitterLogoIcon } from "@radix-ui/react-icons";
 import useTokenStore from "@/store";
+import { useEffect } from "react";
+import { logout } from "@/http/api";
 
 const DashBoardLayout = () => {
   const token = useTokenStore((state) => state.token);
+  const removeToken = useTokenStore((state) => state.removeToken);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      removeToken();
+      navigate("/auth/login");
+    } catch (error) {
+      console.error("Failed to logout:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/auth/login");
+    }
+  }, [token, navigate]);
+
+  if (!token) {
+    return <Navigate to="/auth/login" replace />;
+  }
 
   if (!token) {
     return <Navigate to="/auth/login" replace />;
@@ -293,7 +317,7 @@ const DashBoardLayout = () => {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>

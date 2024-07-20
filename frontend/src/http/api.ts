@@ -48,6 +48,17 @@ export const login = async (data: { email: string; password: string }) => {
   }
 };
 
+export const logout = async () => {
+  try {
+    await api.post("/api/v0/users/logout");
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw error.response.data;
+    }
+    throw error;
+  }
+};
+
 export const register = async (data: {
   name: string;
   email: string;

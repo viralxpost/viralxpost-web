@@ -60,16 +60,17 @@ const router = createBrowserRouter([
         element: <GenerateTweet />,
       },
       {
-        path: "all-tweets",
-        element: <Tweets/>
-      },
-      {
         path: "thread",
         element: <GenerateThread />,
       },
       {
+        path: "all-tweets",
+        element: <Tweets />,
+      },
+
+      {
         path: "all-threads",
-        element: <Threads/>
+        element: <Threads />,
       },
       {
         path: "idea",
@@ -77,12 +78,12 @@ const router = createBrowserRouter([
       },
       {
         path: "all-ideas",
-        element: <Ideas/>
+        element: <Ideas />,
       },
       {
         path: "analytics",
-        element: <Analytics/>
-      }
+        element: <Analytics />,
+      },
     ],
   },
   {
