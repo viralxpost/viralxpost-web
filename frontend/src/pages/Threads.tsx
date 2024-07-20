@@ -11,16 +11,40 @@ import {
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import config from "@/config/config";
-import { getAllThreads, Thread } from "@/http/api";
-import { useQuery } from "@tanstack/react-query";
+import { deleteThread, getAllThreads, Thread } from "@/http/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Loader, PlusCircle } from "lucide-react";
 
 const Threads = () => {
+  const queryClient = useQueryClient();
+
   const { data, error, isLoading } = useQuery<{ threads: Thread[] }, Error>({
     queryKey: ["threads"],
     queryFn: getAllThreads,
   });
+
+  const deleteMutation = useMutation<void, Error, string>({
+    mutationFn: deleteThread,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["threads"],
+      });
+    },
+  });
+
+  const handleDelete = async (id: string) => {
+    if (config.isDevelopment) {
+      console.log("Deleting tweet with id:", id);
+    }
+
+    try {
+      await deleteMutation.mutateAsync(id);
+    } catch (error) {
+      console.error("Failed to delete tweet:", error);
+    }
+  };
+
   if (config.isDevelopment) {
     console.log(data);
   }
@@ -76,11 +100,17 @@ const Threads = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {data?.threads && data.threads.length > 0
               ? [...data.threads].reverse().map((thread, index) => {
-                  const key = thread.id || index;
+                  const key = thread._id || index;
                   if (config.isDevelopment) {
                     console.log(`Thread Key: ${key}`);
                   }
-                  return <ThreadCard key={key} thread={thread} />;
+                  return (
+                    <ThreadCard
+                      key={key}
+                      onDelete={handleDelete}
+                      thread={thread}
+                    />
+                  );
                 })
               : error && <div>{error.message}</div>}
           </div>
