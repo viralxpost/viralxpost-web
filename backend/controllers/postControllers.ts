@@ -151,4 +151,27 @@ const getAllThreads = async (
   }
 };
 
-export { createTweets, getAllTweets, createThreads, getAllThreads };
+const deleteTweet = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  const _req = req as AuthRequest;
+  const tweet = await tweetModel.findOneAndDelete({
+    _id: id,
+    user: _req.userId,
+  });
+  try {
+    if (!tweet) {
+      return next(createHttpError(404, "Tweet not found"));
+    }
+    res.status(200).json({ message: "Tweet deleted successfully" });
+  } catch (error) {
+    return next(createHttpError(500, "Failed to delete tweet"));
+  }
+};
+
+export {
+  createTweets,
+  getAllTweets,
+  createThreads,
+  getAllThreads,
+  deleteTweet,
+};
