@@ -109,3 +109,21 @@ export const deleteThread = async (id: string) => {
     throw error;
   }
 };
+
+export const generateTweet = async (data: {
+  title: string;
+  tags: string;
+  format: string;
+  voice: string;
+  content?: string;
+}) => {
+  try {
+    const response = await api.post("/api/v0/posts/tweets", data);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw error.response.data;
+    }
+    throw error;
+  }
+};

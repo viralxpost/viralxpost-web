@@ -33,10 +33,10 @@ const tweetSchema = new Schema(
     content: {
       type: String,
     },
-    user : {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    }
+      ref: "User",
+    },
   },
   {
     timestamps: true,
