@@ -151,6 +151,8 @@ const getAllThreads = async (
   }
 };
 
+// Delete tweet logic
+
 const deleteTweet = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   const _req = req as AuthRequest;
@@ -167,6 +169,8 @@ const deleteTweet = async (req: Request, res: Response, next: NextFunction) => {
     return next(createHttpError(500, "Failed to delete tweet"));
   }
 };
+
+// Delete thread logic
 
 const deleteThread = async (
   req: Request,
