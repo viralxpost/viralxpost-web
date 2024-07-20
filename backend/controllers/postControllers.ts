@@ -154,11 +154,11 @@ const getAllThreads = async (
 const deleteTweet = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   const _req = req as AuthRequest;
-  const tweet = await tweetModel.findOneAndDelete({
-    _id: id,
-    user: _req.userId,
-  });
   try {
+    const tweet = await tweetModel.findOneAndDelete({
+      _id: id,
+      user: _req.userId,
+    });
     if (!tweet) {
       return next(createHttpError(404, "Tweet not found"));
     }
