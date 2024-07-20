@@ -34,6 +34,7 @@ import { TwitterLogoIcon } from "@radix-ui/react-icons";
 import useTokenStore from "@/store";
 import { useEffect } from "react";
 import { logout } from "@/http/api";
+import config from "@/config/config";
 
 const DashBoardLayout = () => {
   const token = useTokenStore((state) => state.token);
@@ -45,8 +46,13 @@ const DashBoardLayout = () => {
       await logout();
       removeToken();
       navigate("/auth/login");
+      if (config.isDevelopment) {
+        console.log("User logged out successfully");
+      }
     } catch (error) {
-      console.error("Failed to logout:", error);
+      if (config.isDevelopment) {
+        console.error("Failed to logout:", error);
+      }
     }
   };
 
@@ -55,10 +61,6 @@ const DashBoardLayout = () => {
       navigate("/auth/login");
     }
   }, [token, navigate]);
-
-  if (!token) {
-    return <Navigate to="/auth/login" replace />;
-  }
 
   if (!token) {
     return <Navigate to="/auth/login" replace />;
