@@ -26,7 +26,11 @@ const Tweets = () => {
   }
 
   if (isLoading) {
-    return <div className="flex items-center justify-center h-screen"><Loader className="animate-spin"/></div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin" />
+      </div>
+    );
   }
 
   return (
@@ -68,20 +72,17 @@ const Tweets = () => {
             </div>
             <TabsContent value="all"></TabsContent>
           </Tabs>
-          
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {data?.tweets && data.tweets.length > 0 ? (
-              data.tweets.map((tweet, index) => {
-                const key = tweet.id || index;
-                if (config.isDevelopment) {
-                  console.log(`Tweet Key: ${key}`);
-                }
-                return <TweetCard key={key} tweet={tweet} />;
-              })
-            ) : (
-              error && <div>{error.message}</div>
-            )}
+            {data?.tweets && data.tweets.length > 0
+              ? [...data.tweets].reverse().map((tweet, index) => {
+                  const key = tweet.id || index;
+                  if (config.isDevelopment) {
+                    console.log(`Tweet Key: ${key}`);
+                  }
+                  return <TweetCard key={key} tweet={tweet} />;
+                })
+              : error && <div>{error.message}</div>}
           </div>
         </main>
       </div>

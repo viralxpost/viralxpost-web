@@ -25,9 +25,12 @@ const Threads = () => {
     console.log(data);
   }
 
-
   if (isLoading) {
-    return <div className="flex items-center justify-center h-screen"><Loader className="animate-spin" /></div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin" />
+      </div>
+    );
   }
 
   return (
@@ -71,17 +74,15 @@ const Threads = () => {
           </Tabs>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {data?.threads && data.threads.length > 0 ? (
-              data.threads.map((thread, index) => {
-                const key = thread.id || index;
-                if (config.isDevelopment) {
-                  console.log(`Thread Key: ${key}`);
-                }
-                return <ThreadCard key={key} thread={thread} />;
-              })
-            ) : (
-              error && <div>{error.message}</div>
-            )}
+            {data?.threads && data.threads.length > 0
+              ? [...data.threads].reverse().map((thread, index) => {
+                  const key = thread.id || index;
+                  if (config.isDevelopment) {
+                    console.log(`Thread Key: ${key}`);
+                  }
+                  return <ThreadCard key={key} thread={thread} />;
+                })
+              : error && <div>{error.message}</div>}
           </div>
         </main>
       </div>
