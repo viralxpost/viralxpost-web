@@ -237,9 +237,13 @@ const GenerateThread = () => {
                       <SelectValue placeholder="Select tone" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="creative">Creative</SelectItem>
+                      <SelectItem value="funny">Funny</SelectItem>
                       <SelectItem value="casual">Casual</SelectItem>
+                      <SelectItem value="encouraging">Encouraging</SelectItem>
                       <SelectItem value="professional">Professional</SelectItem>
+                      <SelectItem value="informative">Informative</SelectItem>
+                      <SelectItem value="creative">Creative</SelectItem>
+                      <SelectItem value="passionate">Passionate</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
