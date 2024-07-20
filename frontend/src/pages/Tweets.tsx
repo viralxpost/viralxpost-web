@@ -12,9 +12,9 @@ import config from "@/config/config";
 import { deleteTweet, getAllTweets, Tweet } from "@/http/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loader, PlusCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Tweets = () => {
-  
   const queryClient = useQueryClient();
 
   const { data, error, isLoading } = useQuery<{ tweets: Tweet[] }, Error>({
@@ -81,13 +81,14 @@ const Tweets = () => {
                       <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-
-                  <Button size="sm" className="h-8 gap-1">
-                    <PlusCircle className="h-3.5 w-3.5" />
-                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                      Create Tweet
-                    </span>
-                  </Button>
+                  <Link to="/dashboard/tweet">
+                    <Button size="sm" className="h-8 gap-1">
+                      <PlusCircle className="h-3.5 w-3.5" />
+                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                        Create Tweet
+                      </span>
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
