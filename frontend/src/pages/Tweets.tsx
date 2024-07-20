@@ -1,6 +1,5 @@
 import { TweetCard } from "@/components/TweetCard";
 import { Button } from "@/components/ui/button";
-
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -8,19 +7,39 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import config from "@/config/config";
-import { getAllTweets, Tweet } from "@/http/api";
-import { useQuery } from "@tanstack/react-query";
-
+import { deleteTweet, getAllTweets, Tweet } from "@/http/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loader, PlusCircle } from "lucide-react";
 
 const Tweets = () => {
+  const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery<{ tweets: Tweet[] }, Error>({
     queryKey: ["tweets"],
     queryFn: getAllTweets,
   });
+  const deleteMutation = useMutation<void, Error, string>({
+    mutationFn: deleteTweet,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["tweets"],
+      });
+    },
+  });
+
+  const handleDelete = async (id: string) => {
+    if (config.isDevelopment) {
+      console.log("Deleting tweet with id:", id);
+    }
+
+    try {
+      await deleteMutation.mutateAsync(id);
+    } catch (error) {
+      console.error("Failed to delete tweet:", error);
+    }
+  };
+
   if (config.isDevelopment) {
     console.log(data);
   }
@@ -76,11 +95,17 @@ const Tweets = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {data?.tweets && data.tweets.length > 0
               ? [...data.tweets].reverse().map((tweet, index) => {
-                  const key = tweet.id || index;
+                  const key = tweet._id || index;
                   if (config.isDevelopment) {
                     console.log(`Tweet Key: ${key}`);
                   }
-                  return <TweetCard key={key} tweet={tweet} />;
+                  return (
+                    <TweetCard
+                      key={key}
+                      onDelete={handleDelete}
+                      tweet={tweet}
+                    />
+                  );
                 })
               : error && <div>{error.message}</div>}
           </div>

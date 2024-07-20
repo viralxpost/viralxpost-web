@@ -1,9 +1,9 @@
+import axios from "axios";
 import conf from "@/config/config";
 import useTokenStore from "@/store";
-import axios from "axios";
 
 export interface Tweet {
-  id: string;
+  _id: string;
   title: string;
   content: string;
 }
@@ -80,6 +80,17 @@ export const getAllThreads = async () => {
   try {
     const response = await api.get("/api/v0/posts/threads");
     return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw error.response.data;
+    }
+    throw error;
+  }
+};
+
+export const deleteTweet = async (id: string) => {
+  try {
+    await api.delete(`/api/v0/posts/tweets/${id}`);
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       throw error.response.data;
