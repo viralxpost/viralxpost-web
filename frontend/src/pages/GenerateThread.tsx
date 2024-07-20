@@ -147,10 +147,10 @@ const threadFormats = [
 
 const GenerateThread = () => {
   const [description, setDescription] = useState("");
-  const [format, setFormat] = useState("default");
-  const [tone, setTone] = useState("default");
-  const [domain, setDomain] = useState("default");
-  const [generatedThreads, setGeneratedThreads] = useState<string[]>([]);
+  const [format, setFormat] = useState("");
+  const [tone, setTone] = useState("");
+  const [domain, setDomain] = useState("");
+  const [generatedThreads, setGeneratedThreads] = useState("");
 
   const { mutateAsync, error, data } = useMutation({
     mutationFn: generateThread,
@@ -158,14 +158,13 @@ const GenerateThread = () => {
 
   useEffect(() => {
     if (data) {
-      const threadContent = data.thread.content;
-      setGeneratedThreads((prevThreads) => [...prevThreads, threadContent]);
+      setGeneratedThreads(data.thread.content);
     }
   }, [data]);
 
   useEffect(() => {
     if (config.isDevelopment && generatedThreads.length > 0) {
-      console.log("Generated tweet:", generatedThreads);
+      console.log("Generated thread:", generatedThreads);
     }
   }, [generatedThreads]);
 
@@ -192,6 +191,7 @@ const GenerateThread = () => {
       });
     } catch (error) {
       console.error("Error generating thread:", error);
+      // Add UI feedback for errors
     }
   };
 
@@ -199,59 +199,55 @@ const GenerateThread = () => {
     <TooltipProvider>
       <div className="flex flex-1 rounded-lg border border-dashed shadow-sm">
         <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
-          <div
-            className="relative grid flex-col items-start gap-8 md:flex"
-            x-chunk="dashboard-03-chunk-0"
-          >
-            <form
-              className="grid w-full items-start gap-6"
-              onSubmit={handleSubmit}
-            >
+          <div className="relative grid flex-col items-start gap-8 md:flex">
+            <form className="grid w-full items-start gap-6" onSubmit={handleSubmit}>
               <fieldset className="grid gap-6 rounded-lg border p-4">
                 <legend className="-ml-1 px-1 text-sm font-medium">
-                  Messages
+                  Generate Thread
                 </legend>
                 <div className="grid gap-3">
                   <Label htmlFor="content">Thread Description</Label>
                   <Textarea
                     id="content"
-                    placeholder="You are a..."
-                    className="min-h-[25.5rem]"
+                    placeholder="Describe your thread topic..."
+                    className="min-h-[20rem]"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
                 <div className="grid gap-3">
-                  <Label htmlFor="role">Thread Format</Label>
+                  <Label htmlFor="format">Thread Format</Label>
                   <Select onValueChange={handleFormat} defaultValue={format}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a role" />
+                      <SelectValue placeholder="Select a format" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="default">Default</SelectItem>
-                      <SelectItem value="user">User</SelectItem>
-                      <SelectItem value="assistant">Assistant</SelectItem>
+                      {threadFormats.map((format, index) => (
+                        <SelectItem key={index} value={format.template}>
+                          {format.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="grid gap-3">
-                  <Label htmlFor="role">Tone of Voice</Label>
+                  <Label htmlFor="tone">Tone of Voice</Label>
                   <Select onValueChange={handleTone} defaultValue={tone}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a role" />
+                      <SelectValue placeholder="Select tone" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="default">Creative</SelectItem>
+                      <SelectItem value="creative">Creative</SelectItem>
                       <SelectItem value="casual">Casual</SelectItem>
                       <SelectItem value="professional">Professional</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="grid gap-3">
-                  <Label htmlFor="role">Domain</Label>
+                  <Label htmlFor="domain">Domain</Label>
                   <Select onValueChange={handleDomain} defaultValue={domain}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a role" />
+                      <SelectValue placeholder="Select domain" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="default">Default</SelectItem>
@@ -262,7 +258,7 @@ const GenerateThread = () => {
                   </Select>
                 </div>
               </fieldset>
-              <Button>Generate Thread</Button>
+              <Button type="submit">Generate Thread</Button>
             </form>
           </div>
           <div className="relative md:flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
@@ -270,16 +266,10 @@ const GenerateThread = () => {
               Output
             </Badge>
             <div>
-              {generatedThreads.length > 0 ? (
-                generatedThreads.map((thread, index) => (
-                  <div key={index} className="mt-4">
-                    <p>{thread}</p>
-                  </div>
-                ))
+              {generatedThreads ? (
+                <p className="mt-5 whitespace-pre-line">{generatedThreads}</p>
               ) : (
-                <div className="mt-4">
-                  <p>No thread generated yet.</p>
-                </div>
+                <p className="mt-5">No thread generated yet. Please generate a thread by filling out the form above.</p>
               )}
             </div>
             {error && <div className="mt-4 text-red-500">{error.message}</div>}
