@@ -216,6 +216,17 @@ const GenerateThread = () => {
                   />
                 </div>
                 <div className="grid gap-3">
+                  <Label htmlFor="domain">Domain</Label>
+                  <Select onValueChange={handleDomain} defaultValue={domain}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select domain" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="tech">Tech</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid gap-3">
                   <Label htmlFor="format">Thread Format</Label>
                   <Select onValueChange={handleFormat} defaultValue={format}>
                     <SelectTrigger>
@@ -244,20 +255,6 @@ const GenerateThread = () => {
                       <SelectItem value="informative">Informative</SelectItem>
                       <SelectItem value="creative">Creative</SelectItem>
                       <SelectItem value="passionate">Passionate</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="domain">Domain</Label>
-                  <Select onValueChange={handleDomain} defaultValue={domain}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select domain" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="default">Default</SelectItem>
-                      <SelectItem value="tech">Tech</SelectItem>
-                      <SelectItem value="finance">Finance</SelectItem>
-                      <SelectItem value="health">Health</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
