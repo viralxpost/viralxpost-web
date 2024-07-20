@@ -168,10 +168,32 @@ const deleteTweet = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const deleteThread = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+  const _req = req as AuthRequest;
+  try {
+    const thread = await threadModel.findOneAndDelete({
+      _id: id,
+      user: _req.userId,
+    });
+    if (!thread) {
+      return next(createHttpError(404, "Thread not found"));
+    }
+    res.status(200).json({ message: "Thread deleted successfully" });
+  } catch (error) {
+    return next(createHttpError(500, "Failed to delete Thread"));
+  }
+};
+
 export {
   createTweets,
   getAllTweets,
   createThreads,
   getAllThreads,
   deleteTweet,
+  deleteThread,
 };
