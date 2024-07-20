@@ -15,6 +15,47 @@ import { generateTweet } from "@/http/api";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
+const formats = [
+  {
+    label: "Quick Tips",
+    template: `Tech tip: {Brief description of the tech tip}
+Here's how to do it:
+
+1. {Step 1}
+2. {Step 2}
+3. {Step 3}
+
+{Takeaway Message} {Call to action}`
+  },
+  {
+    label: "Myth Busting",
+    template: `Everyone thinks {common tech myth}
+    
+But here's the truth: {reality}
+
+1. Myth: {Myth 1} - Reality: {Reality 1}
+2. Myth: {Myth 2} - Reality: {Reality 2}
+3. Myth: {Myth 3} - Reality: {Reality 3}
+
+{Takeaway Message} {Call to action}`
+  },
+  {
+    label: "Trending Tech News",
+    template: `Breaking: {Tech News Headline}
+
+Why it matters: {Brief explanation}
+
+Key points:
+
+1. {Point 1}
+2. {Point 2}
+3. {Point 3}
+
+{Takeaway Message} {Call to action}`
+  },
+  // Add other formats similarly
+];
+
 const GenerateTweet = () => {
   const [description, setDescription] = useState("");
   const [format, setFormat] = useState("default");
@@ -92,15 +133,17 @@ const GenerateTweet = () => {
                   />
                 </div>
                 <div className="grid gap-3">
-                  <Label htmlFor="format">Tweet Format</Label>
+                  <Label htmlFor="role">Tweet Format</Label>
                   <Select onValueChange={handleFormat} defaultValue={format}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a format" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="default">Default</SelectItem>
-                      <SelectItem value="user">User</SelectItem>
-                      <SelectItem value="assistant">Assistant</SelectItem>
+                      {formats.map((format, index) => (
+                        <SelectItem key={index} value={format.template}>
+                          {format.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
