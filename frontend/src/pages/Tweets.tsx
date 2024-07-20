@@ -14,7 +14,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loader, PlusCircle } from "lucide-react";
 
 const Tweets = () => {
+  
   const queryClient = useQueryClient();
+
   const { data, error, isLoading } = useQuery<{ tweets: Tweet[] }, Error>({
     queryKey: ["tweets"],
     queryFn: getAllTweets,

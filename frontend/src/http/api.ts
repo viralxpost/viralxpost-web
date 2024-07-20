@@ -9,7 +9,7 @@ export interface Tweet {
 }
 
 export interface Thread {
-  id: string;
+  _id: string;
   title: string;
   content: string;
 }
@@ -91,6 +91,17 @@ export const getAllThreads = async () => {
 export const deleteTweet = async (id: string) => {
   try {
     await api.delete(`/api/v0/posts/tweets/${id}`);
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw error.response.data;
+    }
+    throw error;
+  }
+};
+
+export const deleteThread = async (id: string) => {
+  try {
+    await api.delete(`/api/v0/posts/threads/${id}`);
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       throw error.response.data;
