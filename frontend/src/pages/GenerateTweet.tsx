@@ -262,9 +262,9 @@ const GenerateTweet = () => {
             </Badge>
             <div>
             {generatedTweets ? (
-                <p className="mt-5">{generatedTweets}</p>
+                <p className="mt-10 whitespace-pre-line">{generatedTweets}</p>
               ) : (
-                <p className="mt-5">No tweet generated yet. Please generate a tweet by filling out the form above.</p>
+                <p className="mt-10">No tweet generated yet. Please generate a tweet by filling out the form.</p>
               )}
             </div>
             {error && <div className="mt-4 text-red-500">{error.message}</div>}
