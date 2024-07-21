@@ -3,6 +3,7 @@ import {
   createIdeas,
   createThreads,
   createTweets,
+  deleteIdea,
   deleteThread,
   deleteTweet,
   getAllIdeas,
@@ -21,5 +22,6 @@ postRouter.post("/tweets", authenticate, createTweets);
 postRouter.post("/threads", authenticate, createThreads);
 postRouter.post("/ideas", authenticate, createIdeas);
 postRouter.get("/ideas", authenticate, getAllIdeas);
+postRouter.delete("/ideas/:id", authenticate, deleteIdea);
 
 export default postRouter;
