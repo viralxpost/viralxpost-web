@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "main": "",
   "scripts": {
-    "backend": "nodemon backend/server.ts",
-    "frontend": "npm run dev --prefix frontend",
-    "dev": "concurrently \" npm run frontend\" \"npm run backend\""
+    "start": "nodemon server.ts"
   },
   "keywords": [],
   "author": "",

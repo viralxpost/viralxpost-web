@@ -1,5 +1,7 @@
+cd backend
 npm i
+npm start
+cd ..
 cd frontend
 npm i
-cd ..
 npm run dev
