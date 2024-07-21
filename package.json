@@ -1,6 +1,7 @@
 {
   "name": "viralxpost",
   "version": "1.0.0",
+  "type": "module",
   "main": "",
   "scripts": {
     "backend": "node backend/server.ts",
