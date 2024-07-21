@@ -13,6 +13,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import config from "@/config/config";
 import { generateIdea } from "@/http/api";
 import { useMutation } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 
 
@@ -23,7 +24,7 @@ const GenerateIdea = () => {
   const [domain, setDomain] = useState("");
   const [generatedIdeas, setGeneratedIdeas] = useState("");
 
-  const { mutateAsync, error, data } = useMutation({
+  const { mutateAsync, isPending, error, data } = useMutation({
     mutationFn: generateIdea,
   });
 
@@ -69,7 +70,7 @@ const GenerateIdea = () => {
   return (
     <TooltipProvider>
       <div className="flex flex-1 rounded-lg border border-dashed shadow-sm">
-        <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
+        <main className="grid flex-1 gap-4 overflow-auto p-4 lg:grid-cols-3">
           <div
             className="relative grid flex-col items-start gap-8 md:flex"
             x-chunk="dashboard-03-chunk-0"
@@ -142,16 +143,22 @@ const GenerateIdea = () => {
               Generated Idea
             </Badge>
             <div>
-              {generatedIdeas ? (
-                <p className="mt-10 whitespace-pre-line">{generatedIdeas}</p>
+              {
+              isPending ? (
+                <div className="flex items-center justify-center h-screen">
+                  <Loader className="animate-spin" />
+                </div>
+              ) :
+              generatedIdeas ? (
+                <p className="mt-14 whitespace-pre-line">{generatedIdeas}</p>
               ) : (
-                <p className="mt-10">
+                <p className="mt-14">
                   No idea generated yet. Please generate a idea by filling out
                   the form.
                 </p>
               )}
             </div>
-            {error && <div className="mt-4 text-red-500">{error.message}</div>}
+            {error && <div className="mt-14 text-red-500">{error.message}</div>}
           </div>
         </main>
       </div>
