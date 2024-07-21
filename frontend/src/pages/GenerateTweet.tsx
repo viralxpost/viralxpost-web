@@ -13,6 +13,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import config from "@/config/config";
 import { generateTweet } from "@/http/api";
 import { useMutation } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const formats = [
@@ -138,7 +139,7 @@ const GenerateTweet = () => {
   const [domain, setDomain] = useState("");
   const [generatedTweets, setGeneratedTweets] = useState("");
 
-  const { mutateAsync, error, data } = useMutation({
+  const { mutateAsync, isPending, error, data } = useMutation({
     mutationFn: generateTweet,
   });
 
@@ -184,7 +185,7 @@ const GenerateTweet = () => {
   return (
     <TooltipProvider>
       <div className="flex flex-1 rounded-lg border border-dashed shadow-sm">
-        <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
+        <main className="grid flex-1 gap-4 overflow-auto p-4 lg:grid-cols-3">
           <div
             className="relative grid flex-col items-start gap-8 md:flex"
             x-chunk="dashboard-03-chunk-0"
@@ -197,7 +198,7 @@ const GenerateTweet = () => {
                 <legend className="-ml-1 px-1 text-sm font-medium">
                   Messages
                 </legend>
-                
+
                 <div className="grid gap-3">
                   <Label htmlFor="content">Tweet Description</Label>
                   <Textarea
@@ -251,7 +252,7 @@ const GenerateTweet = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                
+
               </fieldset>
               <Button type="submit">Generate Tweet</Button>
             </form>
@@ -261,11 +262,17 @@ const GenerateTweet = () => {
               Generated Tweet
             </Badge>
             <div>
-            {generatedTweets ? (
-                <p className="mt-10 whitespace-pre-line">{generatedTweets}</p>
-              ) : (
-                <p className="mt-10">No tweet generated yet. Please generate a tweet by filling out the form.</p>
-              )}
+              {
+                isPending ? (
+                  <div className="flex items-center justify-center h-screen">
+                    <Loader className="animate-spin" />
+                  </div>
+                ) :
+                  generatedTweets ? (
+                    <p className="mt-14 whitespace-pre-line">{generatedTweets}</p>
+                  ) : (
+                    <p className="mt-14">No tweet generated yet. Please generate a tweet by filling out the form.</p>
+                  )}
             </div>
             {error && <div className="mt-4 text-red-500">{error.message}</div>}
           </div>
