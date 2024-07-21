@@ -203,7 +203,7 @@ const createIdeas = async (req: Request, res: Response, next: NextFunction) => {
   }
   const _req = req as AuthRequest;
   try {
-    const prompt = `Generate ideas for tweets about "${title}" focusing on the "${tags}" topic. Use a "${voice}" tone and follow this format: "${format}". Ensure the ideas are concise, engaging, and without using hashtags or emojis.`;
+    const prompt = `Generate concise and engaging 5 ideas for ${title} ${format} content centered on the "${tags}" topic. Use a "${voice}" tone. Do not include hashtags or emojis. don't add any bold text`;
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();

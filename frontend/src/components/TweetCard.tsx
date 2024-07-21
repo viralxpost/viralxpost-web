@@ -23,12 +23,12 @@ export function TweetCard({ tweet, onDelete }: TweetCardProps) {
     }
   };
   return (
-    <Card className="">
+    <Card className="h-fit">
       <CardHeader>
         <CardTitle>{tweet.title}</CardTitle>
       </CardHeader>
       <CardContent>{tweet.content}</CardContent>
-      <CardFooter className=" justify-end">
+      <CardFooter className="justify-end bottom-1">
         <Button variant="destructive" onClick={handleDelete}>
           Delete
         </Button>

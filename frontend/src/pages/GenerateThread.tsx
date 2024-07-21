@@ -13,6 +13,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import config from "@/config/config";
 import { generateThread } from "@/http/api";
 import { useMutation } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const threadFormats = [
@@ -152,7 +153,7 @@ const GenerateThread = () => {
   const [domain, setDomain] = useState("");
   const [generatedThreads, setGeneratedThreads] = useState("");
 
-  const { mutateAsync, error, data } = useMutation({
+  const { mutateAsync, isPending, error, data } = useMutation({
     mutationFn: generateThread,
   });
 
@@ -198,10 +199,10 @@ const GenerateThread = () => {
   return (
     <TooltipProvider>
       <div className="flex flex-1 rounded-lg border border-dashed shadow-sm">
-        <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
-          <div className="relative grid flex-col items-start gap-8 md:flex">
+        <main className="grid flex-1 gap-4 overflow-auto p-4  lg:grid-cols-3">
+          <div className="relative grid flex-col items-start gap-8 lg:flex">
             <form className="grid w-full items-start gap-6" onSubmit={handleSubmit}>
-              <fieldset className="grid gap-6 rounded-lg border p-4">
+              <fieldset className="grid  gap-6 rounded-lg border p-4">
                 <legend className="-ml-1 px-1 text-sm font-medium">
                   Generate Thread
                 </legend>
@@ -210,7 +211,7 @@ const GenerateThread = () => {
                   <Textarea
                     id="content"
                     placeholder="Describe your thread topic..."
-                    className="min-h-[20rem]"
+                    className="min-h-[25.5rem]"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
@@ -264,13 +265,19 @@ const GenerateThread = () => {
           </div>
           <div className="relative md:flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
             <Badge variant="outline" className="absolute right-3 top-3">
-              Output
+              Generated Thread
             </Badge>
             <div>
-              {generatedThreads ? (
-                <p className="mt-5 whitespace-pre-line">{generatedThreads}</p>
+              {
+              isPending ? (
+                <div className="flex items-center justify-center h-screen">
+                      <Loader className="animate-spin" />
+                    </div>
+              ) : 
+              generatedThreads ? (
+                <p className="mt-14 whitespace-pre-line">{generatedThreads}</p>
               ) : (
-                <p className="mt-5">No thread generated yet. Please generate a thread by filling out the form above.</p>
+                <p className="mt-14">No thread generated yet. Please generate a thread by filling out the form above.</p>
               )}
             </div>
             {error && <div className="mt-4 text-red-500">{error.message}</div>}

@@ -73,7 +73,7 @@ const Ideas = () => {
             <TabsContent value="all"></TabsContent>
           </Tabs>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid gap-4">
             {data?.ideas && data.ideas.length > 0
               ? [...data.ideas].reverse().map((idea, index) => {
                   const key = idea._id || index;

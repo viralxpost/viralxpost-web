@@ -76,7 +76,7 @@ const Threads = () => {
             <TabsContent value="all"></TabsContent>
           </Tabs>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid gap-4">
             {data?.threads && data.threads.length > 0
               ? [...data.threads].reverse().map((thread, index) => {
                   const key = thread._id || index;

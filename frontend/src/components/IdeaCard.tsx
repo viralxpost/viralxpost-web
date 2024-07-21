@@ -9,12 +9,12 @@ import {
 } from "@/components/ui/card";
 import { Idea } from "@/http/api";
 
-interface TweetCardProps {
+interface IdeaCardProps {
   idea: Idea;
   onDelete: (id: string) => void;
 }
 
-export function IdeaCard({ idea, onDelete }: TweetCardProps) {
+export function IdeaCard({ idea, onDelete }: IdeaCardProps) {
   const handleDelete = () => {
     if (idea._id) {
       onDelete(idea._id);
@@ -23,7 +23,7 @@ export function IdeaCard({ idea, onDelete }: TweetCardProps) {
     }
   };
   return (
-    <Card className="">
+    <Card className="h-fit">
       <CardHeader>
         <CardTitle>{idea.title}</CardTitle>
       </CardHeader>
