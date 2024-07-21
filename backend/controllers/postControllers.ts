@@ -232,6 +232,8 @@ const createIdeas = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+// get all ideas logic
+
 const getAllIdeas = async (req: Request, res: Response, next: NextFunction) => {
   const _req = req as AuthRequest;
   try {
@@ -253,6 +255,25 @@ const getAllIdeas = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+// Delete idea logic
+
+const deleteIdea = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  const _req = req as AuthRequest;
+  try {
+    const idea = await ideaModel.findOneAndDelete({
+      _id: id,
+      user: _req.userId,
+    });
+    if (!idea) {
+      return next(createHttpError(404, "Idea not found"));
+    }
+    res.status(200).json({ message: "Idea deleted successfully" });
+  } catch (error) {
+    return next(createHttpError(500, "Failed to delete Idea"));
+  }
+};
+
 export {
   createTweets,
   getAllTweets,
@@ -262,4 +283,5 @@ export {
   deleteThread,
   createIdeas,
   getAllIdeas,
+  deleteIdea,
 };
