@@ -5,6 +5,7 @@ import {
   createTweets,
   deleteThread,
   deleteTweet,
+  getAllIdeas,
   getAllThreads,
   getAllTweets,
 } from "../controllers/postControllers";
@@ -19,5 +20,6 @@ postRouter.delete("/threads/:id", authenticate, deleteThread);
 postRouter.post("/tweets", authenticate, createTweets);
 postRouter.post("/threads", authenticate, createThreads);
 postRouter.post("/ideas", authenticate, createIdeas);
+postRouter.get("/ideas", authenticate, getAllIdeas);
 
 export default postRouter;

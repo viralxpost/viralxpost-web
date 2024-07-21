@@ -67,9 +67,7 @@ const getAllTweets = async (
       .populate("user", "name");
 
     if (!tweets || tweets.length === 0) {
-      return next(
-        createHttpError(404, "No tweets found for the current user.")
-      );
+      return next(createHttpError(404, "No tweets found"));
     }
 
     res.status(200).json({ tweets });
@@ -234,7 +232,26 @@ const createIdeas = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const getAllIdeas = async (req: Request, res: Response, next: NextFunction) => {
+  const _req = req as AuthRequest;
+  try {
+    const userId = _req.userId;
 
+    const ideas = await ideaModel
+      .find({ user: userId })
+      .populate("user", "name");
+
+    if (!ideas || ideas.length === 0) {
+      return next(createHttpError(404, "No ideas found"));
+    }
+
+    res.status(200).json({ ideas });
+  } catch (error) {
+    next(
+      createHttpError(500, "Failed to fetch ideas. Please try again later.")
+    );
+  }
+};
 
 export {
   createTweets,
@@ -244,4 +261,5 @@ export {
   deleteTweet,
   deleteThread,
   createIdeas,
+  getAllIdeas,
 };
