@@ -22,9 +22,9 @@ const createTweets = async (
   }
   const _req = req as AuthRequest;
   try {
-    const prompt = `Create a tweet about "${title}" focusing on the "${tags}" topic. Use a "${voice}" tone and follow this format: "${format}". Ensure the tweet is concise and engaging, without using hashtags or emojis.`;
+    const prompt = `Create a tweet about "${title}" focusing on the "${tags}" topic. Use a "${voice}" tone and follow this format: "${format}" and make sure don't generate same as previous posts. Ensure the tweet is concise and engaging, without using hashtags or emojis.`;
     const result = await model.generateContent(prompt);
-    const response = await result.response;
+    const response = result.response;
     const text = response.text();
     if (config.nodeEnv === "development") {
       console.log(text);
@@ -93,7 +93,7 @@ const createThreads = async (
   }
   const _req = req as AuthRequest;
   try {
-    const prompt = `Create a twitter Thread about "${title}" focusing on the "${tags}" topic. Use a "${voice}" tone and follow this format: "${format}". Ensure the tweet is concise and engaging, without using hashtags or emojis.`;
+    const prompt = `Create a twitter Thread about "${title}" focusing on the "${tags}" topic. Use a "${voice}" tone and follow this format: "${format}" and make sure don't generate same as previous posts. Ensure the tweet is concise and engaging, without using hashtags or emojis.`;
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
@@ -203,9 +203,9 @@ const createIdeas = async (req: Request, res: Response, next: NextFunction) => {
   }
   const _req = req as AuthRequest;
   try {
-    const prompt = `Generate concise and engaging 5 ideas for ${title} ${format} content centered on the "${tags}" topic. Use a "${voice}" tone. Do not include hashtags or emojis. don't add any bold text`;
+    const prompt = `Generate concise and engaging 5 ideas for ${title} ${format} content centered on the "${tags}" topic. Use a "${voice}" tone and make sure don't generate same as previous posts. Do not include hashtags or emojis. don't add any bold text`;
     const result = await model.generateContent(prompt);
-    const response = await result.response;
+    const response = result.response;
     const text = response.text();
     if (config.nodeEnv === "development") {
       console.log(text);
