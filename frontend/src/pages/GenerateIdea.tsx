@@ -18,115 +18,86 @@ import { useEffect, useState } from "react";
 const formats = [
   {
     label: "Quick Tips",
-    template: `Tech tip: {Brief description of the tech tip}
-    
-Here's how to do it:
+    template: `Generate ideas for quick tech tips. Each idea should include:
 
-1. {Step 1}
-2. {Step 2}
-3. {Step 3}
-
-{Takeaway Message} {Call to action}`,
+1. Brief description of the tech tip
+2. Steps to implement the tip
+3. A takeaway message and call to action`,
   },
   {
     label: "Myth Busting",
-    template: `Everyone thinks {common tech myth}
-    
-But here's the truth: {reality}
+    template: `Generate ideas for myth-busting tech misconceptions. Each idea should include:
 
-1. Myth: {Myth 1} - Reality: {Reality 1}
-2. Myth: {Myth 2} - Reality: {Reality 2}
-3. Myth: {Myth 3} - Reality: {Reality 3}
-
-{Takeaway Message} {Call to action}`,
+1. A common tech myth
+2. The reality of the myth
+3. Three myths with their corresponding realities
+4. A takeaway message and call to action`,
   },
   {
     label: "Trending Tech News",
-    template: `Breaking: {Tech News Headline}
+    template: `Generate ideas for tweets about trending tech news. Each idea should include:
 
-Why it matters: {Brief explanation}
-
-Key points:
-
-1. {Point 1}
-2. {Point 2}
-3. {Point 3}
-
-{Takeaway Message} {Call to action}`,
+1. A tech news headline
+2. A brief explanation of why it matters
+3. Key points of the news
+4. A takeaway message and call to action`,
   },
   {
     label: "Tech How-To",
-    template: `Want to {action}?
+    template: `Generate ideas for tech how-to guides. Each idea should include:
 
-Here's a simple guide:
-
-1. {Step 1}
-2. {Step 2}
-3. {Step 3}
-
-Follow for more tech tips! {Call to action}`,
+1. An action to be achieved
+2. Steps to achieve the action
+3. A call to action to follow for more tips`,
   },
   {
     label: "Best Tools",
-    template: `Top tools for {task}:
+    template: `Generate ideas for tweets about top tools for specific tasks. Each idea should include:
 
-1. {Tool 1} - {Brief description}
-2. {Tool 2} - {Brief description}
-3. {Tool 3} - {Brief description}
-
-{Takeaway Message} {Call to action}`,
+1. The task to be performed
+2. A list of top tools for the task with brief descriptions
+3. A takeaway message and call to action`,
   },
   {
     label: "Tech Challenges",
-    template: `Struggling with {common tech problem}?
+    template: `Generate ideas for solving common tech problems. Each idea should include:
 
-Here are 3 solutions:
-
-1. {Solution 1}
-2. {Solution 2}
-3. {Solution 3}
-
-{Takeaway Message} {Call to action}`,
+1. A common tech problem
+2. Three solutions to the problem
+3. A takeaway message and call to action`,
   },
   {
     label: "Predictions",
-    template: `Future of {tech field}: 
+    template: `Generate ideas for future tech predictions. Each idea should include:
 
-1. {Prediction 1}
-2. {Prediction 2}
-3. {Prediction 3}
-
-What do you think? {Call to action}`,
+1. A tech field
+2. Three predictions for the future of the tech field
+3. A call to action to share thoughts`,
   },
   {
     label: "Fun Facts",
-    template: `Did you know? {Tech fun fact}
+    template: `Generate ideas for tech fun facts. Each idea should include:
 
-1. {Fact 1}
-2. {Fact 2}
-3. {Fact 3}
-
-{Takeaway Message} {Call to action}`,
+1. A tech fun fact
+2. Three supporting facts
+3. A takeaway message and call to action`,
   },
   {
     label: "Tech Comparisons",
-    template: `{Tech 1} vs {Tech 2}
+    template: `Generate ideas for tech comparisons. Each idea should include:
 
-Which is better?
-
-1. {Comparison point 1}
-2. {Comparison point 2}
-3. {Comparison point 3}
-
-{Takeaway Message} {Call to action}`,
+1. Two tech items to compare
+2. Three comparison points
+3. A takeaway message and call to action`,
   },
   {
     label: "Inspirational Tech Quotes",
-    template: `“{Inspirational tech quote}” - {Author}
+    template: `Generate ideas for tweets featuring inspirational tech quotes. Each idea should include:
 
-Why it matters: {Brief explanation}
-
-{Takeaway Message} {Call to action}`,
+1. An inspirational tech quote
+2. The author of the quote
+3. A brief explanation of why it matters
+4. A takeaway message and call to action`,
   },
 ];
 
