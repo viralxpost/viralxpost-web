@@ -67,9 +67,7 @@ const getAllTweets = async (
       .populate("user", "name");
 
     if (!tweets || tweets.length === 0) {
-      return next(
-        createHttpError(404, "No tweets found for the current user.")
-      );
+      return next(createHttpError(404, "No tweets found"));
     }
 
     res.status(200).json({ tweets });
@@ -205,7 +203,7 @@ const createIdeas = async (req: Request, res: Response, next: NextFunction) => {
   }
   const _req = req as AuthRequest;
   try {
-    const prompt = `Create a Idea about what to tweet on "${title}" focusing on the "${tags}" topic. Use a "${voice}" tone and follow this format: "${format}". Ensure the tweet is concise and engaging, without using hashtags or emojis.`;
+    const prompt = `Generate ideas for tweets about "${title}" focusing on the "${tags}" topic. Use a "${voice}" tone and follow this format: "${format}". Ensure the ideas are concise, engaging, and without using hashtags or emojis.`;
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
@@ -234,6 +232,27 @@ const createIdeas = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const getAllIdeas = async (req: Request, res: Response, next: NextFunction) => {
+  const _req = req as AuthRequest;
+  try {
+    const userId = _req.userId;
+
+    const ideas = await ideaModel
+      .find({ user: userId })
+      .populate("user", "name");
+
+    if (!ideas || ideas.length === 0) {
+      return next(createHttpError(404, "No ideas found"));
+    }
+
+    res.status(200).json({ ideas });
+  } catch (error) {
+    next(
+      createHttpError(500, "Failed to fetch ideas. Please try again later.")
+    );
+  }
+};
+
 export {
   createTweets,
   getAllTweets,
@@ -242,4 +261,5 @@ export {
   deleteTweet,
   deleteThread,
   createIdeas,
+  getAllIdeas,
 };
