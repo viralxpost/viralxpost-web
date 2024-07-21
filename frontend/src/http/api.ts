@@ -168,6 +168,26 @@ export const generateTweet = async (data: {
   }
 };
 
+
+export const generateIdea = async (data: {
+  title: string;
+  tags: string;
+  format: string;
+  voice: string;
+  content?: string;
+}) => {
+  try {
+    const response = await api.post("/api/v0/posts/ideas", data);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw error.response.data;
+    }
+    throw error;
+  }
+};
+
+
 export const generateThread = async (data: {
   title: string;
   tags: string;
