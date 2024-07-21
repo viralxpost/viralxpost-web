@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
+import { Idea } from "../types/ideaTypes";
 
-const ideaSchema = new Schema(
+const ideaSchema = new Schema<Idea>(
   {
     title: {
       type: String,
@@ -42,6 +43,6 @@ const ideaSchema = new Schema(
   }
 );
 
-const Idea = mongoose.model("Thread", ideaSchema);
+const Idea = mongoose.model<Idea>("Idea", ideaSchema);
 
 export default Idea;
