@@ -14,6 +14,12 @@ export interface Thread {
   content: string;
 }
 
+export interface Idea {
+  _id: string;
+  title: string;
+  content: string;
+}
+
 const api = axios.create({
   baseURL: conf.backendBaseUrl,
   headers: {
@@ -87,6 +93,18 @@ export const getAllTweets = async () => {
   }
 };
 
+export const getAllIdeas = async () => {
+  try {
+    const response = await api.get("/api/v0/posts/ideas");
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw error.response.data;
+    }
+    throw error;
+  }
+};
+
 export const getAllThreads = async () => {
   try {
     const response = await api.get("/api/v0/posts/threads");
@@ -102,6 +120,17 @@ export const getAllThreads = async () => {
 export const deleteTweet = async (id: string) => {
   try {
     await api.delete(`/api/v0/posts/tweets/${id}`);
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw error.response.data;
+    }
+    throw error;
+  }
+};
+
+export const deleteIdea = async (id: string) => {
+  try {
+    await api.delete(`/api/v0/posts/ideas/${id}`);
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       throw error.response.data;
