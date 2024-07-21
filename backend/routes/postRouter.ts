@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  createIdeas,
   createThreads,
   createTweets,
   deleteThread,
@@ -17,5 +18,6 @@ postRouter.get("/threads", authenticate, getAllThreads);
 postRouter.delete("/threads/:id", authenticate, deleteThread);
 postRouter.post("/tweets", authenticate, createTweets);
 postRouter.post("/threads", authenticate, createThreads);
+postRouter.post("/ideas", authenticate, createIdeas);
 
 export default postRouter;

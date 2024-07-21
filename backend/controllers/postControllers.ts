@@ -5,6 +5,7 @@ import createHttpError from "http-errors";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { config } from "../config/config";
 import { AuthRequest } from "../middlewares/authenticate";
+import ideaModel from "../models/idea";
 
 // Create tweet Logic
 
@@ -193,6 +194,46 @@ const deleteThread = async (
   }
 };
 
+// Create idea logic
+
+const createIdeas = async (req: Request, res: Response, next: NextFunction) => {
+  const { title, tags, voice, format } = req.body;
+  const genAI = new GoogleGenerativeAI(config.geminiApi as string);
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  if (!title || !tags || !voice || !format) {
+    return next(createHttpError(400, "All fields are required"));
+  }
+  const _req = req as AuthRequest;
+  try {
+    const prompt = `Create a Idea about what to tweet on "${title}" focusing on the "${tags}" topic. Use a "${voice}" tone and follow this format: "${format}". Ensure the tweet is concise and engaging, without using hashtags or emojis.`;
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    if (config.nodeEnv === "development") {
+      console.log(text);
+    } else {
+      console.log("");
+    }
+
+    const newIdea = await ideaModel.create({
+      title,
+      tags,
+      voice,
+      format,
+      content: text,
+      user: _req.userId,
+    });
+
+    res
+      .status(201)
+      .json({ message: "Idea created successfully", idea: newIdea });
+  } catch (error) {
+    return next(
+      createHttpError(500, "Failed to create idea. Please try again later.")
+    );
+  }
+};
+
 export {
   createTweets,
   getAllTweets,
@@ -200,4 +241,5 @@ export {
   getAllThreads,
   deleteTweet,
   deleteThread,
+  createIdeas,
 };
