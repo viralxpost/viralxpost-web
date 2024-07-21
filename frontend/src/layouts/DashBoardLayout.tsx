@@ -142,7 +142,7 @@ const DashBoardLayout = () => {
                 }}
               >
                 <Cuboid className="h-4 w-4" />
-                Ideas
+                All Ideas
               </NavLink>
               <NavLink
                 to="/dashboard/analytics"
