@@ -1,15 +1,7 @@
 import { ThreadCard } from "@/components/ThreadCard";
 import { Button } from "@/components/ui/button";
 
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import config from "@/config/config";
 import { deleteThread, getAllThreads, Thread } from "@/http/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -68,23 +60,8 @@ const Threads = () => {
         <main className="grid items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           <Tabs defaultValue="all">
             <div className="grid">
-              <div className="flex items-center justify-between">
-                <TabsList>
-                  <TabsTrigger value="all">All</TabsTrigger>
-                  <TabsTrigger value="active">Active</TabsTrigger>
-                  <TabsTrigger value="draft">Draft</TabsTrigger>
-                </TabsList>
+              <div className="flex items-center justify-end">
                 <div className="">
-                  <DropdownMenu>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuCheckboxItem checked>
-                        Active
-                      </DropdownMenuCheckboxItem>
-                      <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
                   <Link to="/dashboard/thread">
                     <Button size="sm" className="h-8 gap-1">
                       <PlusCircle className="h-3.5 w-3.5" />
