@@ -24,7 +24,7 @@ export function ThreadCard({ thread, onDelete }: ThreadCardProps) {
   };
 
   return (
-    <Card className="">
+    <Card className="h-fit">
       <CardHeader>
         <CardTitle>{thread.title}</CardTitle>
       </CardHeader>
