@@ -22,7 +22,7 @@
     "http-error": "^0.0.6",
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
-    "moongoose": "^0.0.5",
+    "mongoose": "^8.5.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3",
     "validator": "^13.12.0"
@@ -37,7 +37,6 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mongoose": "^5.11.96",
     "@types/node": "^20.14.11",
-    "@types/validator": "^13.12.0",
-    "mongoose": "^8.5.1"
+    "@types/validator": "^13.12.0"
   }
 }
