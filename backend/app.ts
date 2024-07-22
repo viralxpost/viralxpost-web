@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: config.frontendDomain,
+    origin: "https://www.viralxpost.xyz/",
   })
 );
 
