@@ -1,0 +1,27 @@
+services:
+    mongosever:
+        image: mongo
+        container_name: mongodb-server
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=root
+        volumes:
+            - ~/mongo/data:/data/db
+        networks:
+            - viralxpost-network
+
+
+    backendapi:
+        image: viralxpost/viralxpost-backend:v1
+        container_name: viralxpost-backend-server
+        ports:
+            - "5513:5513"
+        networks:
+            - viralxpost-network
+        env_file: .env
+        depends_on:
+            - mongosever
+
+networks:
+    viralxpost-network:
+        driver: bridge
