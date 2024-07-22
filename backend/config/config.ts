@@ -7,7 +7,7 @@ const _config = {
   jwtSecret: process.env.JWT_SECRET,
   nodeEnv: process.env.NODE_ENV,
   geminiApi: process.env.GEMINI_API,
-  frontendDomain: 'https://viralxpost.xyz' || process.env.FRONTEND_DOMAIN, 
+  frontendDomain: process.env.FRONTEND_DOMAIN || "https://www.viralxpost.xyz" || "https://viralxpost.xyz", 
 };
 
 export const config = Object.freeze(_config);
