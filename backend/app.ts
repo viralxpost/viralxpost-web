@@ -12,8 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const options = {
+  origin: ["https://www.viralxpost.xyz", "https://viralxpost.xyz", "http://localhost:3000"],
   credentials: true,
-  origin: ["https://www.viralxpost.xyz/"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
