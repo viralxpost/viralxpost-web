@@ -11,11 +11,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(
-  cors({
-    origin: "https://www.viralxpost.xyz/",
-  })
-);
+const options = {
+  credentials: true,
+  origin: ["https://www.viralxpost.xyz/"],
+};
+
+app.use(cors(options));
 
 app.get("/", (req, res) => {
   res.send("viralxpost");
