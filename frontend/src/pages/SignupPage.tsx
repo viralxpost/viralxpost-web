@@ -8,7 +8,7 @@ import useTokenStore from "@/store";
 import { useMutation } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
@@ -19,6 +19,19 @@ const SignupPage = () => {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    if (token) {
+      setToken(token);
+      if (config.isDevelopment) {
+        console.log("Login successful");
+        console.log("Redirecting to dashboard with token", token);
+      }
+      navigate("/dashboard");
+    }
+  }, [navigate, setToken]);
 
   const mutation = useMutation({
     mutationFn: register,
@@ -48,6 +61,10 @@ const SignupPage = () => {
     }
 
     mutation.mutate({ name, email, password });
+  };
+
+  const handleGoogleSignUp = () => {
+    window.location.href = `${config.backendBaseUrl}auth/google`;
   };
 
   return (
@@ -112,7 +129,11 @@ const SignupPage = () => {
                 Sign up
               </span>
             </Button>
-            <Button variant="outline" className="w-full">
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={handleGoogleSignUp}
+            >
               Login with Google
             </Button>
           </div>
