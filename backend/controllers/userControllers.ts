@@ -5,6 +5,32 @@ import createHttpError from "http-errors";
 import validator from "validator";
 import userModel from "../models/user";
 import { config } from "../config/config";
+import client from "../config/client";
+
+// Check user already exists
+
+const checkEmailExists = async (email: string): Promise<boolean> => {
+  const cacheKey = `user:email:${email}`;
+  const cachedResult = await client.get(cacheKey);
+
+  if (cachedResult) {
+    return JSON.parse(cachedResult);
+  }
+
+  const user = await userModel.findOne({ email });
+  await client.set(cacheKey, JSON.stringify(user !== null), {
+    EX: 300, // Cache expires in 5 minutes
+  });
+
+  return user !== null;
+};
+
+const cacheUser = async (email: string, user: any) => {
+  const cacheKey = `user:email:${email}`;
+  await client.set(cacheKey, JSON.stringify(user), {
+    EX: 300, // Cache expires in 5 minutes
+  });
+};
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
   const { name, email, password } = req.body;
@@ -19,17 +45,15 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
 
   const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
   if (!passwordValidation.test(password)) {
-    return next(
-      createHttpError(
-        400,
-        "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number"
-      )
-    );
+    return next(createHttpError(
+      400,
+      "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number"
+    ));
   }
 
   try {
-    const existingUser = await userModel.findOne({ email });
-    if (existingUser) {
+    const emailExists = await checkEmailExists(email);
+    if (emailExists) {
       return next(createHttpError(400, "User already exists"));
     }
 
@@ -52,10 +76,12 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
     });
 
     res.status(201).json({ accessToken: token });
+
+    // Invalidate the cached email existence check after successful registration
+    const cacheKey = `user:email:${email}`;
+    await client.del(cacheKey);
   } catch (error) {
-    next(
-      createHttpError(500, "Failed to create user. Please try again later.")
-    );
+    next(createHttpError(500, "Failed to create user. Please try again later."));
   }
 };
 
@@ -66,12 +92,20 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    let user = await userModel.findOne({ email });
+    const cacheKey = `user:email:${email}`;
+    const cachedUser = await client.get(cacheKey);
 
-    if (!user) {
-      return next(
-        createHttpError(400, "User not found. Please check your email.")
-      );
+    let user;
+    if (cachedUser) {
+      user = JSON.parse(cachedUser);
+    } else {
+      user = await userModel.findOne({ email });
+
+      if (!user) {
+        return next(createHttpError(400, "User not found. Please check your email."));
+      }
+
+      await cacheUser(email, user);
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -92,23 +126,29 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 
     res.status(200).json({ accessToken: token });
   } catch (error) {
-    return next(
-      createHttpError(
-        500,
-        "Unable to process login request. Please try again later."
-      )
-    );
+    return next(createHttpError(500, "Unable to process login request. Please try again later."));
   }
 };
 
 const logoutUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const token = req.cookies.accessToken;
+
+    if (token) {
+      const decodedToken: any = jwt.verify(token, config.jwtSecret as string);
+      const userId = decodedToken.sub;
+      const user = await userModel.findById(userId);
+
+      if (user) {
+        const cacheKey = `user:email:${user.email}`;
+        await client.del(cacheKey);
+      }
+    }
+
     res.clearCookie("accessToken");
     res.status(200).json({ message: "Successfully logged out" });
   } catch (error) {
-    return next(
-      createHttpError(500, "Failed to log out. Please try again later.")
-    );
+    return next(createHttpError(500, "Failed to log out. Please try again later."));
   }
 };
 
