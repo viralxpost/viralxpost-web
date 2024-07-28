@@ -14,7 +14,15 @@ const userSchema = new mongoose.Schema<User>(
     },
     password: {
       type: String,
-      required: true,
+      // Use a function to conditionally require the password
+      required: function (this: User) {
+        return !this.googleId; // If there's no Google ID, password is required
+      },
+
+    },
+    googleId: {
+      type: String,
+      unique: true,
     },
   },
   {
