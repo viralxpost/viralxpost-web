@@ -134,7 +134,7 @@ const SignupPage = () => {
               className="w-full"
               onClick={handleGoogleSignUp}
             >
-              Login with Google
+              Sign up with Google
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">

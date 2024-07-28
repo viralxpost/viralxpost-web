@@ -18,10 +18,9 @@ export function LoginPage() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
+    const token = urlParams.get("token");
     if (token) {
       setToken(token);
       if (config.isDevelopment) {
@@ -35,11 +34,10 @@ export function LoginPage() {
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (response) => {
-      if (config.isDevelopment) {
-        console.log("Login successful");
-      }
       setToken(response.accessToken);
-      console.log("Login successful", response.accessToken);
+      if (config.isDevelopment) {
+        console.log("Login successful", response.accessToken);
+      }
       navigate("/dashboard");
     },
     onError: (error) => {
@@ -117,7 +115,11 @@ export function LoginPage() {
                 Login
               </span>
             </Button>
-            <Button variant="outline" className="w-full" onClick={handleGoogleLogin}>
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={handleGoogleLogin}
+            >
               Login with Google
             </Button>
           </div>
