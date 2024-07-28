@@ -6,9 +6,25 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { config } from "../config/config";
 import { AuthRequest } from "../middlewares/authenticate";
 import ideaModel from "../models/idea";
+import client from "../config/client";
+
+// Utility function to cache data
+const cacheData = async (key: string, data: any, ttl: number) => {
+  await client.set(key, JSON.stringify(data), { EX: ttl });
+};
+
+// Utility function to get cached data
+const getCachedData = async (key: string) => {
+  const data = await client.get(key);
+  return data ? JSON.parse(data) : null;
+};
+
+// Utility function to delete cached data
+const deleteCachedData = async (key: string) => {
+  await client.del(key);
+};
 
 // Create tweet Logic
-
 const createTweets = async (
   req: Request,
   res: Response,
@@ -41,6 +57,9 @@ const createTweets = async (
       user: _req.userId,
     });
 
+    // Invalidate the cache for this user's tweets
+    await deleteCachedData(`tweets:user:${_req.userId}`);
+
     res
       .status(201)
       .json({ message: "tweet created successfully", tweet: newTweet });
@@ -52,7 +71,6 @@ const createTweets = async (
 };
 
 // Get all tweets Logic
-
 const getAllTweets = async (
   req: Request,
   res: Response,
@@ -61,13 +79,20 @@ const getAllTweets = async (
   const _req = req as AuthRequest;
   try {
     const userId = _req.userId;
+    const cacheKey = `tweets:user:${userId}`;
 
-    const tweets = await tweetModel
-      .find({ user: userId })
-      .populate("user", "name");
+    // Try to get tweets from the cache
+    let tweets = await getCachedData(cacheKey);
 
-    if (!tweets || tweets.length === 0) {
-      return next(createHttpError(404, "No tweets found"));
+    if (!tweets) {
+      tweets = await tweetModel.find({ user: userId }).populate("user", "name");
+
+      if (!tweets || tweets.length === 0) {
+        return next(createHttpError(404, "No tweets found"));
+      }
+
+      // Cache the tweets for 5 minutes
+      await cacheData(cacheKey, tweets, 300);
     }
 
     res.status(200).json({ tweets });
@@ -79,7 +104,6 @@ const getAllTweets = async (
 };
 
 // Create thread Logic
-
 const createThreads = async (
   req: Request,
   res: Response,
@@ -113,6 +137,9 @@ const createThreads = async (
       user: _req.userId,
     });
 
+    // Invalidate the cache for this user's threads
+    await deleteCachedData(`threads:user:${_req.userId}`);
+
     res
       .status(201)
       .json({ message: "Thread created successfully", thread: newThread });
@@ -124,7 +151,6 @@ const createThreads = async (
 };
 
 // Get all threads logic
-
 const getAllThreads = async (
   req: Request,
   res: Response,
@@ -133,13 +159,22 @@ const getAllThreads = async (
   const _req = req as AuthRequest;
   try {
     const userId = _req.userId;
+    const cacheKey = `threads:user:${userId}`;
 
-    const threads = await threadModel
-      .find({ user: userId })
-      .populate("user", "name");
+    // Try to get threads from the cache
+    let threads = await getCachedData(cacheKey);
 
-    if (!threads || threads.length === 0) {
-      return next(createHttpError(404, "No threads found"));
+    if (!threads) {
+      threads = await threadModel
+        .find({ user: userId })
+        .populate("user", "name");
+
+      if (!threads || threads.length === 0) {
+        return next(createHttpError(404, "No threads found"));
+      }
+
+      // Cache the threads for 5 minutes
+      await cacheData(cacheKey, threads, 300);
     }
 
     res.status(200).json({ threads });
@@ -151,7 +186,6 @@ const getAllThreads = async (
 };
 
 // Delete tweet logic
-
 const deleteTweet = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   const _req = req as AuthRequest;
@@ -163,6 +197,10 @@ const deleteTweet = async (req: Request, res: Response, next: NextFunction) => {
     if (!tweet) {
       return next(createHttpError(404, "Tweet not found"));
     }
+
+    // Invalidate the cache for this user's tweets
+    await deleteCachedData(`tweets:user:${_req.userId}`);
+
     res.status(200).json({ message: "Tweet deleted successfully" });
   } catch (error) {
     return next(createHttpError(500, "Failed to delete tweet"));
@@ -170,7 +208,6 @@ const deleteTweet = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 // Delete thread logic
-
 const deleteThread = async (
   req: Request,
   res: Response,
@@ -186,6 +223,10 @@ const deleteThread = async (
     if (!thread) {
       return next(createHttpError(404, "Thread not found"));
     }
+
+    // Invalidate the cache for this user's threads
+    await deleteCachedData(`threads:user:${_req.userId}`);
+
     res.status(200).json({ message: "Thread deleted successfully" });
   } catch (error) {
     return next(createHttpError(500, "Failed to delete Thread"));
@@ -193,7 +234,6 @@ const deleteThread = async (
 };
 
 // Create idea logic
-
 const createIdeas = async (req: Request, res: Response, next: NextFunction) => {
   const { title, tags, voice, format } = req.body;
   const genAI = new GoogleGenerativeAI(config.geminiApi as string);
@@ -222,6 +262,9 @@ const createIdeas = async (req: Request, res: Response, next: NextFunction) => {
       user: _req.userId,
     });
 
+    // Invalidate the cache for this user's ideas
+    await deleteCachedData(`ideas:user:${_req.userId}`);
+
     res
       .status(201)
       .json({ message: "Idea created successfully", idea: newIdea });
@@ -233,18 +276,24 @@ const createIdeas = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 // get all ideas logic
-
 const getAllIdeas = async (req: Request, res: Response, next: NextFunction) => {
   const _req = req as AuthRequest;
   try {
     const userId = _req.userId;
+    const cacheKey = `ideas:user:${userId}`;
 
-    const ideas = await ideaModel
-      .find({ user: userId })
-      .populate("user", "name");
+    // Try to get ideas from the cache
+    let ideas = await getCachedData(cacheKey);
 
-    if (!ideas || ideas.length === 0) {
-      return next(createHttpError(404, "No ideas found"));
+    if (!ideas) {
+      ideas = await ideaModel.find({ user: userId }).populate("user", "name");
+
+      if (!ideas || ideas.length === 0) {
+        return next(createHttpError(404, "No ideas found"));
+      }
+
+      // Cache the ideas for 5 minutes
+      await cacheData(cacheKey, ideas, 300);
     }
 
     res.status(200).json({ ideas });
@@ -256,7 +305,6 @@ const getAllIdeas = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 // Delete idea logic
-
 const deleteIdea = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   const _req = req as AuthRequest;
@@ -268,6 +316,10 @@ const deleteIdea = async (req: Request, res: Response, next: NextFunction) => {
     if (!idea) {
       return next(createHttpError(404, "Idea not found"));
     }
+
+    // Invalidate the cache for this user's ideas
+    await deleteCachedData(`ideas:user:${_req.userId}`);
+
     res.status(200).json({ message: "Idea deleted successfully" });
   } catch (error) {
     return next(createHttpError(500, "Failed to delete Idea"));

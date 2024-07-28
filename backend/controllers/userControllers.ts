@@ -45,10 +45,12 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
 
   const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
   if (!passwordValidation.test(password)) {
-    return next(createHttpError(
-      400,
-      "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number"
-    ));
+    return next(
+      createHttpError(
+        400,
+        "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number"
+      )
+    );
   }
 
   try {
@@ -81,7 +83,9 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
     const cacheKey = `user:email:${email}`;
     await client.del(cacheKey);
   } catch (error) {
-    next(createHttpError(500, "Failed to create user. Please try again later."));
+    next(
+      createHttpError(500, "Failed to create user. Please try again later.")
+    );
   }
 };
 
@@ -102,7 +106,9 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
       user = await userModel.findOne({ email });
 
       if (!user) {
-        return next(createHttpError(400, "User not found. Please check your email."));
+        return next(
+          createHttpError(400, "User not found. Please check your email.")
+        );
       }
 
       await cacheUser(email, user);
@@ -126,7 +132,12 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 
     res.status(200).json({ accessToken: token });
   } catch (error) {
-    return next(createHttpError(500, "Unable to process login request. Please try again later."));
+    return next(
+      createHttpError(
+        500,
+        "Unable to process login request. Please try again later."
+      )
+    );
   }
 };
 
@@ -148,7 +159,9 @@ const logoutUser = async (req: Request, res: Response, next: NextFunction) => {
     res.clearCookie("accessToken");
     res.status(200).json({ message: "Successfully logged out" });
   } catch (error) {
-    return next(createHttpError(500, "Failed to log out. Please try again later."));
+    return next(
+      createHttpError(500, "Failed to log out. Please try again later.")
+    );
   }
 };
 
