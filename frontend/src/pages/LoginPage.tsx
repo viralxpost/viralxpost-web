@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import useTokenStore from "@/store";
 import { useMutation } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export function LoginPage() {
@@ -18,6 +18,19 @@ export function LoginPage() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    if (token) {
+      setToken(token);
+      if (config.isDevelopment) {
+        console.log("Login successful");
+        console.log("Redirecting to dashboard with token", token);
+      }
+      navigate("/dashboard");
+    }
+  }, [navigate, setToken]);
   //mutation
   const mutation = useMutation({
     mutationFn: login,
@@ -26,6 +39,7 @@ export function LoginPage() {
         console.log("Login successful");
       }
       setToken(response.accessToken);
+      console.log("Login successful", response.accessToken);
       navigate("/dashboard");
     },
     onError: (error) => {
@@ -45,6 +59,10 @@ export function LoginPage() {
     }
 
     mutation.mutate({ email, password });
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${config.backendBaseUrl}auth/google`;
   };
 
   return (
@@ -99,7 +117,7 @@ export function LoginPage() {
                 Login
               </span>
             </Button>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full" onClick={handleGoogleLogin}>
               Login with Google
             </Button>
           </div>
