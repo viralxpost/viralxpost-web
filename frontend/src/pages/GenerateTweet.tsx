@@ -196,7 +196,7 @@ const GenerateTweet = () => {
             >
               <fieldset className="grid gap-6 rounded-lg border p-4">
                 <legend className="-ml-1 px-1 text-sm font-medium">
-                  Messages
+                  Generate Tweet
                 </legend>
 
                 <div className="grid gap-3">
@@ -204,7 +204,7 @@ const GenerateTweet = () => {
                   <Textarea
                     id="content"
                     placeholder="How to build a saas..."
-                    className="min-h-[25.5rem]"
+                    className="md:min-h-[25.5rem]"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
