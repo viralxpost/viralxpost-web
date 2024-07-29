@@ -211,7 +211,7 @@ const GenerateThread = () => {
                   <Textarea
                     id="content"
                     placeholder="Describe your thread topic..."
-                    className="min-h-[25.5rem]"
+                    className="md:min-h-[25.5rem]"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
