@@ -9,13 +9,13 @@ import {Outlet} from 'react-router-dom'
 const HomeLayout = () => {
 
   return (
-    // bg-page-gradient
+      
     <main className=''>
-     
-    <Navbar/>
+      <Navbar/>
      <Outlet/> 
      <Footer/>
     </main>
+  
   )
 }
 
