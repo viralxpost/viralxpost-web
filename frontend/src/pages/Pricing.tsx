@@ -1,8 +1,12 @@
+import PaymentButton from "@/components/paymentButton";
+
 const Pricing = () => {
   return (
-    <div>
-      <h1>Pricing</h1>
-    </div>
+    <>
+      <div className="h-screen flex justify-center items-center">
+        <PaymentButton />
+      </div>
+    </>
   );
 };
 
