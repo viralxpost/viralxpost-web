@@ -7,15 +7,15 @@ import authRouter from "./routes/authRouter";
 import cors from "cors";
 import { config } from "./config/config";
 import passport from "passport";
-import expressSession from "express-session"
+import expressSession from "express-session";
+import paymentRouter from "./routes/paymentRouter";
 
-require("./config/googleStratergy")
+require("./config/googleStratergy");
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 
 const options = {
   origin: config.frontendDomain,
@@ -25,13 +25,15 @@ const options = {
 };
 
 app.use(cors(options));
-app.use(expressSession({
-  secret: config.expressSessionSecret as string,
-  resave: false,
-  saveUninitialized: false
-}))
+app.use(
+  expressSession({
+    secret: config.expressSessionSecret as string,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
-app.use(passport.initialize())
+app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/", (req, res) => {
@@ -40,7 +42,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/v0/users/", userRouter);
 app.use("/api/v0/posts/", postRouter);
-app.use("/auth", authRouter)
+app.use("/auth", authRouter);
+app.use("/api/payments", paymentRouter);
 
 //gloabl error handler
 app.use(globalErrorHandler);

@@ -18,7 +18,10 @@ const _config = {
   googleClientId: process.env.GOOGLE_CLIENT_ID,
   googleSecretKey: process.env.GOOGLE_SECRET_KEY,
   expressSecret: process.env.EXPRESS_SECRET,
-  callbackUrl: process.env.GOOGLE_CALLBACK_URL
+  callbackUrl: process.env.GOOGLE_CALLBACK_URL,
+  razorpayKeyId: process.env.RAZORPAY_KEY_ID,
+  razorpayKeySecret: process.env.RAZORPAY_KEY_SECRET,
+
 };
 
 export const config = Object.freeze(_config);
