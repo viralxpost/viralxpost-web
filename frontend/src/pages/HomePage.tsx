@@ -6,7 +6,6 @@ import { Hero, HeroSubtitle, HeroTitle } from "@/components/Hero";
 import { HeroImage } from "@/components/HeroImage";
 import LogoTicker from "@/components/LogoTicker";
 import { MarqueeComp } from "@/components/MarqueeComp";
-import { TextRevealComp } from "@/components/TextRevealComp";
 import AnimatedShinyText from "@/components/magicui/animated-shiny-text";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -16,7 +15,7 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
  
   return (
-    <Container>
+    <Container>      
       <div className="z-10 translate-y-[-1rem] mt-24 animate-fade-in opacity-0 [--animation-delay:100ms] flex lg:min-h-[10rem] md:min-h-[7rem] min-h-[5rem] items-center justify-center">
         <div
           className={cn(
@@ -73,7 +72,6 @@ const HomePage = () => {
 
           <MarqueeComp />
         </div>
-        <TextRevealComp />
 
         <Faq />
       </Hero>
