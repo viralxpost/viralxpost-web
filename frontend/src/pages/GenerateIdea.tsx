@@ -89,7 +89,7 @@ const GenerateIdea = () => {
                   <Textarea
                     id="content"
                     placeholder="coding languages..."
-                    className="min-h-[25.5rem]"
+                    className="md:min-h-[25.5rem]"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
