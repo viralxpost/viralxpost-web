@@ -87,9 +87,8 @@ const Navbar = () => {
 
         {/* Menu items (collapsed menu for mobile) */}
         <div
-          className={`md:hidden ${
-            showMenu ? "block" : "hidden"
-          } absolute top-16 left-0 w-full h-screen shadow-lg rounded-lg py-2 bg-black`}
+          className={`md:hidden ${showMenu ? "block" : "hidden"
+            } absolute top-16 left-0 w-full h-screen shadow-lg rounded-lg py-2 bg-black`}
         >
           <div className="flex flex-col gap-3">
             <Link
@@ -126,7 +125,7 @@ const Navbar = () => {
         </div>
 
         {/* Menu items (left side for larger screens) */}
-        <div className="md:flex text-sm lg:text-base md:gap-8 lg:gap-10 hidden">
+        <div className="md:flex text-sm md:gap-8 lg:gap-10 hidden">
           <Link className="hover:underline" to="/about">
             About
           </Link>
