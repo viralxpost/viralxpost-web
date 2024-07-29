@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import config from "@/config/config";
 import { createOrder, verifyPayment } from "@/http/api";
+import useTokenStore from "@/store";
+import { useNavigate } from "react-router-dom";
 
 const PricingCard: React.FC<{
   plan: string;
@@ -21,8 +23,7 @@ const PricingCard: React.FC<{
     <div className="flex items-baseline text-gray-900 dark:text-white">
       <span className="text-3xl font-semibold">₹</span>
       <span className="text-5xl font-extrabold tracking-tight">{amount}</span>
-      <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400">
-      </span>
+      <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400"></span>
     </div>
     <ul role="list" className="space-y-5 my-7">
       <li className="flex items-center">
@@ -65,7 +66,16 @@ const PricingCard: React.FC<{
 );
 
 const PaymentButton: React.FC = () => {
+  const token = useTokenStore((state) => state.token);
+  const navigate = useNavigate();
+  
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+
+  const handleNavigate = async () => {
+    navigate("/auth/login");
+  };
 
   const handlePayment = async () => {
     if (!selectedPlan) {
@@ -145,12 +155,21 @@ const PaymentButton: React.FC = () => {
         selectedPlan={selectedPlan}
       />
       <div className="flex items-center justify-center mt-10 md:col-span-3">
-        <button
-          onClick={handlePayment}
-          className="px-6 py-2 bg-blue-500 text-white rounded-md"
-        >
-          Pay Now
-        </button>
+        {token ? (
+          <button
+            onClick={handlePayment}
+            className="px-6 py-2 bg-blue-500 text-white rounded-md"
+          >
+            Pay Now
+          </button>
+        ) : (
+          <button
+            onClick={handleNavigate}
+            className="px-6 py-2 bg-blue-500 text-white rounded-md"
+          >
+            Sign up for payment
+          </button>
+        )}
       </div>
     </div>
   );
