@@ -8,6 +8,7 @@ const client = createClient({
   socket: {
     host: config.redisHost,
     port: Number(config.redisPort),
+    connectTimeout: 10000,
   },
 });
 
