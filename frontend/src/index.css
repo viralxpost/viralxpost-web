@@ -65,7 +65,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    @apply font-["Poppins"]
+    @apply font-["manrope"]
   }
 }
 
@@ -86,10 +86,10 @@
       @apply text-sm inline-flex border border-[#222]/10 px-3 py-1 rounded-lg tracking-tight;
   }
   .section-title {
-      @apply text-center text-3xl md:text-[54px] md:leading-[60px] font-bold tracking-tighter bg-gradient-to-b from-black to-zinc-700 text-transparent bg-clip-text;
+      @apply text-center text-3xl md:text-[54px] md:leading-[60px] font-black tracking-tighter bg-gradient-to-b from-black to-zinc-700 text-transparent bg-clip-text;
   }
   .section-description {
-      @apply text-center text-xl leading-[30px] tracking-tight text-zinc-600;
+      @apply text-center text-xl font-medium leading-[30px] tracking-tight text-zinc-600;
   }
   .section-container {
       @apply max-w-[540px] mx-auto;
