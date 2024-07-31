@@ -66,7 +66,7 @@ interface Options {
 
 const Pricing = () => {
     return (
-        <section className="py-24">
+        <section className="">
             <div className="px-5 md:px-0 md:max-w-[900px] lg:max-w-[1300px] container mx-auto">
                 <div className="section-container">
                 <h2 className="section-title">Pricing</h2>
