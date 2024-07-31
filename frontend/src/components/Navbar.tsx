@@ -60,7 +60,7 @@ const Navbar = () => {
           )}
           <button
             onClick={toggleMenu}
-            className="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+            className="block text-gray-500  focus:outline-none"
           >
             <svg
               className="h-7 w-7 fill-current"
