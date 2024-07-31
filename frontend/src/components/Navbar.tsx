@@ -88,20 +88,20 @@ const Navbar = () => {
         {/* Menu items (collapsed menu for mobile) */}
         <div
           className={`md:hidden ${showMenu ? "block" : "hidden"
-            } absolute top-16 left-0 w-full h-screen shadow-lg rounded-lg py-2 bg-black`}
+            } absolute top-16 left-0 w-full h-screen shadow-lg rounded-lg py-2 bg-white`}
         >
           <div className="flex flex-col gap-3">
             <Link
               to="/about"
               onClick={toggleMenu}
-              className="py-1 px-4 hover:text-gray-200 underline"
+              className="py-1 px-4 underline"
             >
               About
             </Link>
             <Link
               to="/features"
               onClick={toggleMenu}
-              className="py-1 px-4 hover:text-gray-200 underline"
+              className="py-1 px-4 underline"
             >
               Features
             </Link>
