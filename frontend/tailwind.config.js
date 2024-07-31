@@ -24,7 +24,8 @@ module.exports = {
           "radial-gradient(ellipse 80% 50% at 10% -10%, rgba(115, 115, 115, 0.3), transparent)",
 
         "hero-gradient":
-          "radial-gradient(ellipse 50% 80% at 20% 40%,rgba(93,52,221,0.1),transparent), radial-gradient(ellipse 50% 80% at 80% 50%,rgba(120,119,198,0.15),transparent)",
+          "radial-gradient(ellipse 50% 80% at 20% 40%, rgba(255, 182, 193, 0.1), transparent), radial-gradient(ellipse 50% 80% at 80% 50%, rgba(255, 105, 180, 0.1), transparent)",
+
         "hero-glow":
           "conic-gradient(from 230.29deg at 51.63% 52.16%, rgb(115, 115, 115) 0deg, rgb(115, 115, 115) 67.5deg, rgb(115, 115, 115) 198.75deg, rgb(115, 115, 115) 251.25deg, rgb(115, 115, 115) 301.88deg, rgb(115, 115, 115) 360deg)",
 
