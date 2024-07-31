@@ -20,7 +20,6 @@ const Navbar = () => {
           className="flex items-center font-semibold lg:text-2xl md:text-lg"
         >
           <Logo />
-          viralxpost
         </Link>
 
         <div className="md:hidden flex gap-2">
