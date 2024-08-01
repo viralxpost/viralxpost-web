@@ -66,14 +66,6 @@ interface Options {
 }
 
 const Pricing = () => {
-<<<<<<< HEAD
-    return (
-        <section className="">
-            <div className="px-5 md:px-0 md:max-w-[900px] lg:max-w-[1300px] container mx-auto">
-                <div className="section-container">
-                <h2 className="section-title">Pricing</h2>
-                <p className="section-description mt-5">Choose a plan that fits your budget and business goals perfectly.</p>
-=======
   return (
     <section className="py-24">
       <div className="px-5 md:px-0 md:max-w-[900px] lg:max-w-[1300px] container mx-auto">
@@ -127,7 +119,6 @@ const Pricing = () => {
                       </motion.span>
                     </div>
                   )}
->>>>>>> 2922bdd (add pricing card in pricing router)
                 </div>
                 <div className="flex items-baseline gap-1 mt[30px]">
                   <span className="text-4xl font-bold tracking-tighter leading-none">
