@@ -13,7 +13,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import config from "@/config/config";
 import { generateThread } from "@/http/api";
 import { useMutation } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
+import { Check, Copy, Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const threadFormats = [
@@ -29,7 +29,7 @@ const threadFormats = [
 
 4/ {Recent Achievements} - {Recent successes or learnings}
 
-5/ {Future Goals} - {What’s next?} {Call to action}`
+5/ {Future Goals} - {What’s next?} {Call to action}`,
   },
   {
     label: "FAQs",
@@ -43,7 +43,7 @@ const threadFormats = [
 
 4/ {FAQ 4} - {Answer to FAQ 4}
 
-5/ {Additional Resources} - {Links or recommendations} {Call to action}`
+5/ {Additional Resources} - {Links or recommendations} {Call to action}`,
   },
   {
     label: "Pro Tips",
@@ -57,7 +57,7 @@ const threadFormats = [
 
 4/ {Pro Tip 4} - {Explanation or benefit}
 
-5/ {Bonus Tip} - {Extra advice or resource} {Call to action}`
+5/ {Bonus Tip} - {Extra advice or resource} {Call to action}`,
   },
   {
     label: "In-Depth Analysis",
@@ -71,7 +71,7 @@ const threadFormats = [
 
 4/ {Key Finding 3} - {Details and implications}
 
-5/ {Summary and Conclusion} - {Final thoughts and insights} {Call to action}`
+5/ {Summary and Conclusion} - {Final thoughts and insights} {Call to action}`,
   },
   {
     label: "Comparison",
@@ -85,7 +85,7 @@ const threadFormats = [
 
 4/ {Aspect 3} - {Item 1} vs {Item 2}
 
-5/ {Final Verdict} - {Which one is better and why?} {Call to action}`
+5/ {Final Verdict} - {Which one is better and why?} {Call to action}`,
   },
   {
     label: "Behind the Scenes",
@@ -99,7 +99,7 @@ const threadFormats = [
 
 4/ {Key Moments} - {Notable events or milestones}
 
-5/ {Final Outcome} - {Results and reflections} {Call to action}`
+5/ {Final Outcome} - {Results and reflections} {Call to action}`,
   },
   {
     label: "Case Study",
@@ -113,7 +113,7 @@ const threadFormats = [
 
 4/ {Results} - {Outcomes and impact}
 
-5/ {Key Takeaways} - {Lessons learned and advice} {Call to action}`
+5/ {Key Takeaways} - {Lessons learned and advice} {Call to action}`,
   },
   {
     label: "Trend Analysis",
@@ -127,7 +127,7 @@ const threadFormats = [
 
 4/ {Trend 3} - {Details and significance}
 
-5/ {Future Outlook} - {What to expect next} {Call to action}`
+5/ {Future Outlook} - {What to expect next} {Call to action}`,
   },
   {
     label: "Event Highlights",
@@ -141,10 +141,9 @@ const threadFormats = [
 
 4/ {Highlight 4} - {Key moment or insight}
 
-5/ {Overall Impression} - {General thoughts and reflections} {Call to action}`
-  }
+5/ {Overall Impression} - {General thoughts and reflections} {Call to action}`,
+  },
 ];
-
 
 const GenerateThread = () => {
   const [description, setDescription] = useState("");
@@ -152,6 +151,7 @@ const GenerateThread = () => {
   const [tone, setTone] = useState("");
   const [domain, setDomain] = useState("");
   const [generatedThreads, setGeneratedThreads] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const { mutateAsync, isPending, error, data } = useMutation({
     mutationFn: generateThread,
@@ -196,12 +196,23 @@ const GenerateThread = () => {
     }
   };
 
+  const handleCopy = () => {
+    if (generatedThreads) {
+      navigator.clipboard.writeText(generatedThreads);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 10000);
+    }
+  };
+
   return (
     <TooltipProvider>
       <div className="flex flex-1 rounded-lg border border-dashed shadow-sm">
         <main className="grid flex-1 gap-4 overflow-auto p-4  lg:grid-cols-3">
           <div className="relative grid flex-col items-start gap-8 lg:flex">
-            <form className="grid w-full items-start gap-6" onSubmit={handleSubmit}>
+            <form
+              className="grid w-full items-start gap-6"
+              onSubmit={handleSubmit}
+            >
               <fieldset className="grid  gap-6 rounded-lg border p-4">
                 <legend className="-ml-1 px-1 text-sm font-medium">
                   Generate Thread
@@ -268,16 +279,26 @@ const GenerateThread = () => {
               Generated Thread
             </Badge>
             <div>
-              {
-              isPending ? (
+              {isPending ? (
                 <div className="flex items-center justify-center h-screen">
-                      <Loader className="animate-spin" />
-                    </div>
-              ) : 
-              generatedThreads ? (
-                <p className="mt-14 whitespace-pre-line">{generatedThreads}</p>
+                  <Loader className="animate-spin" />
+                </div>
+              ) : generatedThreads ? (
+                <div>
+                  <p className="mt-14 whitespace-pre-line mb-5">
+                    {generatedThreads}
+                  </p>
+                  <div className="w-full flex justify-end">
+                    <Button onClick={handleCopy}>
+                      {copied ? <Check className="w-4 h-4" /> : <Copy />}
+                    </Button>
+                  </div>
+                </div>
               ) : (
-                <p className="mt-14">No thread generated yet. Please generate a thread by filling out the form above.</p>
+                <p className="mt-14">
+                  No thread generated yet. Please generate a thread by filling
+                  out the form above.
+                </p>
               )}
             </div>
             {error && <div className="mt-4 text-red-500">{error.message}</div>}
