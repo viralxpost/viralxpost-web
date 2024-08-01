@@ -1,4 +1,4 @@
-import {  MagicWandIcon } from "@radix-ui/react-icons";
+import { MagicWandIcon } from "@radix-ui/react-icons";
 import { BentoCard, BentoGrid } from "./magicui/bento-grid";
 import { Clock, GlobeIcon, Palette, TrendingUp } from "lucide-react";
 
@@ -56,16 +56,16 @@ const BentoComp = () => {
   return (
     <div className="mt-28  max-w-[1000px] mx-auto">
       <div className="flex justify-center">
-              <div className="tag">Testimonials</div>
-            </div>
+        <div className="tag">Features</div>
+      </div>
       <div className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:300ms] section-title mt-5">
         Key Features
       </div>
       <div className="section-description mt-5">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo, a!
+        Explore the Core Features of Our Tool!
       </div>
 
-      <BentoGrid className="lg:grid-rows-3 mt-20">
+      <BentoGrid className="lg:grid-rows-3 mt-10">
         {features.map((feature) => (
           <BentoCard key={feature.name} {...feature} />
         ))}
