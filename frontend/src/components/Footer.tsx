@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="text-xs opacity-60 px-4 md:px-0 md:text-lg">
         viralxpost is Built by{" "}
         <Link
-          to="https://x.com/Avhi_Maz"
+          to="https://x.com/avhimazumder"
           target="_"
           className="underline font-medium"
         >

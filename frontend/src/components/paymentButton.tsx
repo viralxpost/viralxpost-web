@@ -1,105 +1,102 @@
-import React, { useState } from "react";
+import { Check } from "lucide-react";
+import { twMerge } from "tailwind-merge";
+import { motion } from "framer-motion";
 import config from "@/config/config";
 import { createOrder, verifyPayment } from "@/http/api";
 import useTokenStore from "@/store";
 import { useNavigate } from "react-router-dom";
 
-const PricingCard: React.FC<{
-  plan: string;
-  amount: number;
-  description: string;
-  onSelect: (plan: string) => void;
-  selectedPlan: string | null;
-}> = ({ plan, amount, description, onSelect, selectedPlan }) => (
-  <div
-    className={`p-4 bg-white border border-gray-200 rounded-lg shadow ${
-      selectedPlan === plan ? "bg-blue-100" : ""
-    } cursor-pointer`}
-    onClick={() => onSelect(plan)}
-  >
-    <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
-      {description}
-    </h5>
-    <div className="flex items-baseline text-gray-900 dark:text-white">
-      <span className="text-3xl font-semibold">₹</span>
-      <span className="text-5xl font-extrabold tracking-tight">{amount}</span>
-      <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400"></span>
-    </div>
-    <ul role="list" className="space-y-5 my-7">
-      <li className="flex items-center">
-        <svg
-          className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-        </svg>
-        <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-          Feature 1
-        </span>
-      </li>
-      <li className="flex">
-        <svg
-          className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-        </svg>
-        <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-          Feature 2
-        </span>
-      </li>
-      {/* Add more features as needed */}
-    </ul>
-    <button
-      type="button"
-      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
-    >
-      Choose Plan
-    </button>
-  </div>
-);
+const pricingTiers = [
+  {
+    title: "Free",
+    monthlyPrice: 0,
+    buttonText: "Sign up for Free",
+    popular: false,
+    inverse: false,
+    features: [
+      "Unlimited features",
+      "No hidden costs",
+      "No credit card required",
+      "No support or assistance",
+      "No API access",
+      "No Advance information",
+    ],
+  },
+  {
+    title: "Basic",
+    monthlyPrice: 9,
+    buttonText: "Start your free trial",
+    popular: true,
+    inverse: true,
+    features: [
+      "Unlimited features",
+      "No hidden costs",
+      "No credit card required",
+      "No support or assistance",
+      "No API access",
+      "No Advance information",
+      "No support or assistance",
+      "No API access",
+    ],
+  },
+  {
+    title: "Premium",
+    monthlyPrice: 19,
+    buttonText: "Start your free trial",
+    popular: false,
+    inverse: false,
+    features: [
+      "Unlimited features",
+      "No hidden costs",
+      "No credit card required",
+      "No support or assistance",
+      "No API access",
+      "No Advance information",
+      "No support or assistance",
+      "No API access",
+      "No Advance information",
+      "No support or assistance",
+    ],
+  },
+];
 
-const PaymentButton: React.FC = () => {
+interface Options {
+  title: string;
+  monthlyPrice: number;
+  buttonText: string;
+  popular: boolean;
+  inverse: boolean;
+  features: string[];
+}
+
+const Pricing = () => {
   const token = useTokenStore((state) => state.token);
   const navigate = useNavigate();
-  
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-
-  const handleNavigate = async () => {
+  const handleNavigate = () => {
     navigate("/auth/login");
   };
 
-  const handlePayment = async () => {
-    if (!selectedPlan) {
-      alert("Please select a plan.");
+  const handlePayment = async (plan: string, monthlyPrice: number) => {
+    if (!token) {
+      handleNavigate();
       return;
     }
 
     try {
-      // Call createOrder with the selected plan
-      const order = await createOrder(selectedPlan);
+      const order = await createOrder(plan);
       const { id: orderId, amount } = order;
 
-      // Set up Razorpay options
       const options = {
         key: config.razorPay,
-        amount, // Amount in the smallest currency unit
+        amount,
         currency: "INR",
         name: "viralxpost",
-        description: "Test Transaction",
+        description: `${plan} Plan - ${monthlyPrice} INR/month`,
         order_id: orderId,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         handler: async (response: any) => {
           try {
-            // Verify payment
             await verifyPayment(
               response.razorpay_order_id,
               response.razorpay_payment_id,
@@ -120,8 +117,6 @@ const PaymentButton: React.FC = () => {
           color: "#3399cc",
         },
       };
-
-      // Open Razorpay checkout
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const rzp = new (window as any).Razorpay(options);
       rzp.open();
@@ -132,47 +127,96 @@ const PaymentButton: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-6">
-      <PricingCard
-        plan="3_months"
-        amount={500}
-        description="3 Months Plan"
-        onSelect={setSelectedPlan}
-        selectedPlan={selectedPlan}
-      />
-      <PricingCard
-        plan="6_months"
-        amount={1000}
-        description="6 Months Plan"
-        onSelect={setSelectedPlan}
-        selectedPlan={selectedPlan}
-      />
-      <PricingCard
-        plan="12_months"
-        amount={1500}
-        description="12 Months Plan"
-        onSelect={setSelectedPlan}
-        selectedPlan={selectedPlan}
-      />
-      <div className="flex items-center justify-center mt-10 md:col-span-3">
-        {token ? (
-          <button
-            onClick={handlePayment}
-            className="px-6 py-2 bg-blue-500 text-white rounded-md"
-          >
-            Pay Now
-          </button>
-        ) : (
-          <button
-            onClick={handleNavigate}
-            className="px-6 py-2 bg-blue-500 text-white rounded-md"
-          >
-            Sign up for payment
-          </button>
-        )}
+    <section className="py-24">
+      <div className="px-5 md:px-0 md:max-w-[900px] lg:max-w-[1300px] container mx-auto">
+        <div className="section-container mt-20">
+          <h2 className="section-title">Pricing</h2>
+          <p className="section-description mt-5">
+            Choose a plan that fits your budget and business goals perfectly.
+          </p>
+        </div>
+        <div className="flex flex-col gap-6 items-center mt-10 lg:flex-row lg:items-end lg:justify-center">
+          {pricingTiers.map(
+            ({
+              title,
+              monthlyPrice,
+              buttonText,
+              popular,
+              inverse,
+              features,
+            }: Options) => (
+              <div
+                key={title}
+                className={twMerge(
+                  "card",
+                  inverse && "border-black bg-black text-white"
+                )}
+                onClick={() => handlePayment(title, monthlyPrice)}
+              >
+                <div className="flex justify-between">
+                  <h3
+                    className={twMerge(
+                      "text-lg font-bold text-black/50",
+                      inverse && "text-white/60"
+                    )}
+                  >
+                    {title}
+                  </h3>
+                  {popular && (
+                    <div className="inline-flex text-sm px-4 py-1.5 rounded-xl border border-white/20">
+                      <motion.span
+                        animate={{
+                          backgroundPositionX: "100%",
+                        }}
+                        transition={{
+                          duration: 1,
+                          repeat: Infinity,
+                          ease: "linear",
+                          repeatType: "loop",
+                        }}
+                        className="bg-[linear-gradient(to_right,#DD7DDF,#E1CD86,#BBCB92,#71C2EF,#3BFFFF,#DD7DDF,#E1CD86,#BBCB92,#71C2EF,#3BFFFF)] [background-size:200%] text-transparent bg-clip-text font-medium"
+                      >
+                        Popular
+                      </motion.span>
+                    </div>
+                  )}
+                </div>
+                <div className="flex items-baseline gap-1 mt[30px]">
+                  <span className="text-4xl font-bold tracking-tighter leading-none">
+                    ${monthlyPrice}
+                  </span>
+                  <span
+                    className={twMerge(
+                      "tracking-tight font-bold text-black/50",
+                      inverse && "text-white/50"
+                    )}
+                  >
+                    /month
+                  </span>
+                </div>
+                <button
+                  className={twMerge(
+                    "btn btn-primary w-full mt-[30px]",
+                    inverse && "bg-white text-black"
+                  )}
+                >
+                  {buttonText}
+                </button>
+                <ul className="flex flex-col gap-5 mt-8">
+                  {features.map((feature, index) => (
+                    <li className="text-sm flex items-center gap-4" key={index}>
+                      <Check className="h-6 w-6" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          )}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default PaymentButton;
+export default Pricing;
