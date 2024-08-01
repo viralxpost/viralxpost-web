@@ -28,8 +28,7 @@ const Navbar = () => {
               <Link to="/auth/login">
                 <Button
                   variant="link"
-                  size="sm"
-                  className="md:text-sm text-[13px]"
+                  size="default"
                   onClick={toggleMenu}
                 >
                   Login
@@ -37,7 +36,7 @@ const Navbar = () => {
               </Link>
               <Link to="/auth/register" className="ml-2">
                 <Button
-                  size="sm"
+                  size="default"
                   className="md:text-sm text-[13px]"
                   onClick={toggleMenu}
                 >
@@ -49,7 +48,7 @@ const Navbar = () => {
             <div className="flex justify-center">
               <Link to="/auth/login">
                 <Button
-                  size="sm"
+                  size="default"
                   className="md:text-sm text-[10px]"
                   onClick={toggleMenu}
                 >
@@ -105,7 +104,7 @@ const Navbar = () => {
               Features
             </Link>
             <Link
-              to="/blog"
+              to="/"
               onClick={toggleMenu}
               className="py-1 px-4 hover:text-gray-200 underline"
             >
@@ -124,7 +123,7 @@ const Navbar = () => {
         </div>
 
         {/* Menu items (left side for larger screens) */}
-        <div className="md:flex text-sm md:gap-8 lg:gap-10 hidden">
+        <div className="md:flex md:gap-8 lg:gap-10 hidden">
           <Link className="hover:underline" to="/about">
             About
           </Link>
