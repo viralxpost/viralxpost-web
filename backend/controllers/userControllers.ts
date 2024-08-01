@@ -82,6 +82,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
     // Invalidate the cached email existence check after successful registration
     const cacheKey = `user:email:${email}`;
     await client.del(cacheKey);
+    await cacheUser(email, newUser);
   } catch (error) {
     next(
       createHttpError(500, "Failed to create user. Please try again later.")
