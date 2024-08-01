@@ -130,7 +130,7 @@ const Navbar = () => {
           <Link className="hover:underline" to="/features">
             Features
           </Link>
-          <Link className="hover:underline" to="/blog">
+          <Link className="hover:underline" to="/">
             Blog
           </Link>
           <Link className="hover:underline" to="/pricing">
