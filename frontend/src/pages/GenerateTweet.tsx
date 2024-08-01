@@ -13,7 +13,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import config from "@/config/config";
 import { generateTweet } from "@/http/api";
 import { useMutation } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
+import { Check, Copy, Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const formats = [
@@ -27,7 +27,7 @@ Here's how to do it:
 2. {Step 2}
 3. {Step 3}
 
-{Takeaway Message} {Call to action}`
+{Takeaway Message} {Call to action}`,
   },
   {
     label: "Myth Busting",
@@ -39,7 +39,7 @@ But here's the truth: {reality}
 2. Myth: {Myth 2} - Reality: {Reality 2}
 3. Myth: {Myth 3} - Reality: {Reality 3}
 
-{Takeaway Message} {Call to action}`
+{Takeaway Message} {Call to action}`,
   },
   {
     label: "Trending Tech News",
@@ -53,7 +53,7 @@ Key points:
 2. {Point 2}
 3. {Point 3}
 
-{Takeaway Message} {Call to action}`
+{Takeaway Message} {Call to action}`,
   },
   {
     label: "Tech How-To",
@@ -65,7 +65,7 @@ Here's a simple guide:
 2. {Step 2}
 3. {Step 3}
 
-Follow for more tech tips! {Call to action}`
+Follow for more tech tips! {Call to action}`,
   },
   {
     label: "Best Tools",
@@ -75,7 +75,7 @@ Follow for more tech tips! {Call to action}`
 2. {Tool 2} - {Brief description}
 3. {Tool 3} - {Brief description}
 
-{Takeaway Message} {Call to action}`
+{Takeaway Message} {Call to action}`,
   },
   {
     label: "Tech Challenges",
@@ -87,7 +87,7 @@ Here are 3 solutions:
 2. {Solution 2}
 3. {Solution 3}
 
-{Takeaway Message} {Call to action}`
+{Takeaway Message} {Call to action}`,
   },
   {
     label: "Predictions",
@@ -97,7 +97,7 @@ Here are 3 solutions:
 2. {Prediction 2}
 3. {Prediction 3}
 
-What do you think? {Call to action}`
+What do you think? {Call to action}`,
   },
   {
     label: "Fun Facts",
@@ -107,7 +107,7 @@ What do you think? {Call to action}`
 2. {Fact 2}
 3. {Fact 3}
 
-{Takeaway Message} {Call to action}`
+{Takeaway Message} {Call to action}`,
   },
   {
     label: "Tech Comparisons",
@@ -119,7 +119,7 @@ Which is better?
 2. {Comparison point 2}
 3. {Comparison point 3}
 
-{Takeaway Message} {Call to action}`
+{Takeaway Message} {Call to action}`,
   },
   {
     label: "Inspirational Tech Quotes",
@@ -127,10 +127,9 @@ Which is better?
 
 Why it matters: {Brief explanation}
 
-{Takeaway Message} {Call to action}`
+{Takeaway Message} {Call to action}`,
   },
 ];
-
 
 const GenerateTweet = () => {
   const [description, setDescription] = useState("");
@@ -138,6 +137,7 @@ const GenerateTweet = () => {
   const [tone, setTone] = useState("");
   const [domain, setDomain] = useState("");
   const [generatedTweets, setGeneratedTweets] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const { mutateAsync, isPending, error, data } = useMutation({
     mutationFn: generateTweet,
@@ -179,6 +179,14 @@ const GenerateTweet = () => {
       });
     } catch (error) {
       console.error("Error generating tweet:", error);
+    }
+  };
+
+  const handleCopy = () => {
+    if (generatedTweets) {
+      navigator.clipboard.writeText(generatedTweets);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 10000);
     }
   };
 
@@ -252,7 +260,6 @@ const GenerateTweet = () => {
                     </SelectContent>
                   </Select>
                 </div>
-
               </fieldset>
               <Button type="submit">Generate Tweet</Button>
             </form>
@@ -261,18 +268,29 @@ const GenerateTweet = () => {
             <Badge variant="outline" className="absolute right-3 top-3">
               Generated Tweet
             </Badge>
+            <div className="absolute left-3 top-3"></div>
             <div>
-              {
-                isPending ? (
-                  <div className="flex items-center justify-center h-screen">
-                    <Loader className="animate-spin" />
+              {isPending ? (
+                <div className="flex items-center justify-center h-screen">
+                  <Loader className="animate-spin" />
+                </div>
+              ) : generatedTweets ? (
+                <div>
+                  <p className="mt-14 whitespace-pre-line mb-5">
+                    {generatedTweets}
+                  </p>
+                  <div className="w-full flex justify-end">
+                    <Button onClick={handleCopy}>
+                      {copied ? <Check className="w-4 h-4" /> : <Copy />}
+                    </Button>
                   </div>
-                ) :
-                  generatedTweets ? (
-                    <p className="mt-14 whitespace-pre-line">{generatedTweets}</p>
-                  ) : (
-                    <p className="mt-14">No tweet generated yet. Please generate a tweet by filling out the form.</p>
-                  )}
+                </div>
+              ) : (
+                <p className="mt-14">
+                  No tweet generated yet. Please generate a tweet by filling out
+                  the form.
+                </p>
+              )}
             </div>
             {error && <div className="mt-4 text-red-500">{error.message}</div>}
           </div>

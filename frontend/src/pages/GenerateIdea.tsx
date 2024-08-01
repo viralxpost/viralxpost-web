@@ -13,9 +13,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import config from "@/config/config";
 import { generateIdea } from "@/http/api";
 import { useMutation } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
+import { Check, Copy, Loader } from "lucide-react";
 import { useEffect, useState } from "react";
-
 
 const GenerateIdea = () => {
   const [description, setDescription] = useState("");
@@ -23,6 +22,7 @@ const GenerateIdea = () => {
   const [tone, setTone] = useState("");
   const [domain, setDomain] = useState("");
   const [generatedIdeas, setGeneratedIdeas] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const { mutateAsync, isPending, error, data } = useMutation({
     mutationFn: generateIdea,
@@ -64,6 +64,14 @@ const GenerateIdea = () => {
       });
     } catch (error) {
       console.error("Error generating idea:", error);
+    }
+  };
+
+  const handleCopy = () => {
+    if (generatedIdeas) {
+      navigator.clipboard.writeText(generatedIdeas);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 10000);
     }
   };
 
@@ -143,14 +151,21 @@ const GenerateIdea = () => {
               Generated Idea
             </Badge>
             <div>
-              {
-              isPending ? (
+              {isPending ? (
                 <div className="flex items-center justify-center h-screen">
                   <Loader className="animate-spin" />
                 </div>
-              ) :
-              generatedIdeas ? (
-                <p className="mt-14 whitespace-pre-line">{generatedIdeas}</p>
+              ) : generatedIdeas ? (
+                <div>
+                  <p className="mt-14 whitespace-pre-line mb-5">
+                    {generatedIdeas}
+                  </p>
+                  <div className="w-full flex justify-end">
+                    <Button onClick={handleCopy}>
+                      {copied ? <Check className="w-4 h-4" /> : <Copy />}
+                    </Button>
+                  </div>
+                </div>
               ) : (
                 <p className="mt-14">
                   No idea generated yet. Please generate a idea by filling out
