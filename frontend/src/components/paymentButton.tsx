@@ -89,7 +89,7 @@ const Pricing = () => {
 
       const options = {
         key: config.razorPay,
-        amount,
+        amount, // Amount in the smallest currency unit
         currency: "INR",
         name: "viralxpost",
         description: `${plan} Plan - ${monthlyPrice} INR/month`,
