@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="lg:max-w-[1200px] py-10 h-[10rem] sm:max-w-[920px] mx-auto px-16">
+    <footer className="lg:max-w-[1000px]  h-[10rem] sm:max-w-[920px] mx-auto">
       <div className="text-xs opacity-60 px-4 md:px-0 md:text-lg">
         viralxpost is Built by{" "}
         <Link
