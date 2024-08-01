@@ -1,10 +1,11 @@
-import { Check } from "lucide-react";
-import { twMerge } from "tailwind-merge";
-import { motion } from "framer-motion";
 import config from "@/config/config";
 import { createOrder, verifyPayment } from "@/http/api";
 import useTokenStore from "@/store";
+import { Check } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { twMerge } from "tailwind-merge";
+import { motion } from "framer-motion";
 
 const pricingTiers = [
   {
@@ -69,17 +70,36 @@ interface Options {
   features: string[];
 }
 
-const Pricing = () => {
+const PaymentButton = () => {
   const token = useTokenStore((state) => state.token);
   const navigate = useNavigate();
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
   const handleNavigate = () => {
     navigate("/auth/login");
   };
 
-  const handlePayment = async (plan: string, monthlyPrice: number) => {
+  const handlePayment = async (title: string, monthlyPrice: number) => {
+    const planMap: { [key: string]: string } = {
+      Free: "free",
+      Basic: "9_dollars",
+      Premium: "19_dollars",
+    };
+
+    const plan = planMap[title];
+
     if (!token) {
+      if (plan === "free") {
+        handleNavigate();
+        return;
+      }
+      alert("You need to be logged in to make a payment.");
       handleNavigate();
+      return;
+    }
+
+    if (plan === "free") {
+      navigate("/dashboard");
       return;
     }
 
@@ -89,11 +109,12 @@ const Pricing = () => {
 
       const options = {
         key: config.razorPay,
-        amount, // Amount in the smallest currency unit
-        currency: "INR",
+        amount,
+        currency: "USD",
         name: "viralxpost",
-        description: `${plan} Plan - ${monthlyPrice} INR/month`,
+        description: `${plan} Plan - ${monthlyPrice} USD/month`,
         order_id: orderId,
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         handler: async (response: any) => {
           try {
@@ -117,19 +138,20 @@ const Pricing = () => {
           color: "#3399cc",
         },
       };
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const rzp = new (window as any).Razorpay(options);
       rzp.open();
     } catch (error) {
       console.error("Payment initialization failed:", error);
-      alert("Payment initialization failed.");
+      alert("Payment initialization failed");
     }
   };
 
   return (
     <section className="py-24">
       <div className="px-5 md:px-0 md:max-w-[900px] lg:max-w-[1300px] container mx-auto">
-        <div className="section-container mt-20">
+        <div className="section-container">
           <h2 className="section-title">Pricing</h2>
           <p className="section-description mt-5">
             Choose a plan that fits your budget and business goals perfectly.
@@ -149,9 +171,10 @@ const Pricing = () => {
                 key={title}
                 className={twMerge(
                   "card",
-                  inverse && "border-black bg-black text-white"
+                  inverse && "border-black bg-black text-white",
+                  selectedPlan === title && "ring-2 ring-blue-500"
                 )}
-                onClick={() => handlePayment(title, monthlyPrice)}
+                onClick={() => setSelectedPlan(title)}
               >
                 <div className="flex justify-between">
                   <h3
@@ -199,6 +222,7 @@ const Pricing = () => {
                     "btn btn-primary w-full mt-[30px]",
                     inverse && "bg-white text-black"
                   )}
+                  onClick={() => handlePayment(title, monthlyPrice)}
                 >
                   {buttonText}
                 </button>
@@ -219,4 +243,4 @@ const Pricing = () => {
   );
 };
 
-export default Pricing;
+export default PaymentButton;

@@ -1,5 +1,5 @@
 export const pricingPlans: { [key: string]: number } = {
-  "3_months": 500, // Amount in INR
-  "6_months": 1000,
-  "12_months": 1500,
+  free: 0, // Free plan
+  "9_dollars": 9, // $9 plan
+  "19_dollars": 19, // $19 plan
 };

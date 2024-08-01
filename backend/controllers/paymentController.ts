@@ -22,10 +22,15 @@ export const createOrder = async (req: Request, res: Response) => {
     // Get the amount based on the selected plan
     const amount = pricingPlans[plan];
 
+    // Free plan does not require payment
+    if (amount === 0) {
+      return res.status(200).json({ message: "Free plan selected" });
+    }
+
     // Create Razorpay order
     const options = {
       amount: amount * 100, // Convert to smallest currency unit
-      currency: "INR",
+      currency: "USD",
       receipt: `receipt_${Date.now()}`,
       payment_capture: 1, // Capture payment immediately
     };
