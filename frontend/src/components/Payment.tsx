@@ -149,13 +149,18 @@ const Payment = () => {
   };
 
   return (
-    <section className="">
-      <div className="px-5 md:px-0 md:max-w-[900px] lg:max-w-[1300px] container mx-auto">
-        <div className="section-container mt-5">
-          <h2 className="section-title p-2">Pricing</h2>
-          <p className="section-description mt-5">
-            Choose a plan that fits your budget and business goals perfectly.
-          </p>
+    <section className="my-10">
+      <div className=" px-5 md:px-0 md:max-w-[900px] lg:max-w-[1300px] container mx-auto">
+        <div className=" max-w-[1000px] mx-auto">
+          <div className="section-container">
+            <div className="flex justify-center">
+              <div className="tag">Pricing</div>
+            </div>
+            <h2 className="section-title mt-5">Pricing</h2>
+            <p className="section-description mt-5">
+              Choose a plan that fits your budget and business goals perfectly.
+            </p>
+          </div>
         </div>
         <div className="flex flex-col gap-6 items-center mt-10 lg:flex-row lg:items-end lg:justify-center">
           {pricingTiers.map(
