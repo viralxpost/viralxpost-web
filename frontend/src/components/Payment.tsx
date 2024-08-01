@@ -124,6 +124,7 @@ const Payment = () => {
               response.razorpay_signature
             );
             alert("Payment successful!");
+            navigate("/dashboard");
           } catch (error) {
             console.error("Payment verification failed:", error);
             alert("Payment verification failed.");
