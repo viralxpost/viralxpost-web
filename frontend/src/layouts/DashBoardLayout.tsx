@@ -39,7 +39,7 @@ const DashBoardLayout = () => {
   const removeToken = useTokenStore((state) => state.removeToken);
   const navigate = useNavigate();
 
-  const handleLogout =  () => {
+  const handleLogout = () => {
     try {
       removeToken();
       navigate("/auth/login");
@@ -62,14 +62,16 @@ const DashBoardLayout = () => {
   if (!token) {
     return <Navigate to="/auth/login" replace />;
   }
-  
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-4">
           <div className="flex h-20 items-center px-4 lg:px-6">
-            <Link to="/" className="flex fixed items-center gap-2 font-semibold">
+            <Link
+              to="/"
+              className="flex fixed items-center gap-2 font-semibold"
+            >
               <Logo width="30" />
             </Link>
           </div>
@@ -292,26 +294,33 @@ const DashBoardLayout = () => {
               </div>
             </SheetContent>
           </Sheet>
-         
-         <div className="flex w-full justify-end">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-         </div>
 
+          <div className="flex w-full justify-end">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="rounded-full"
+                >
+                  <CircleUser className="h-5 w-5" />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <Link to="mailto:viralxpost.xyz@gmail.com">
+                  <DropdownMenuItem>Support</DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout}>
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           <Outlet />
