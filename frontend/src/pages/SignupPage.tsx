@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import config from "@/config/config";
 import useTokenStore from "@/store";
+import { ArrowLeft } from "lucide-react";
 
 import { useEffect } from "react";
+import { FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
@@ -30,8 +32,8 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="w-full xl:min-h-[800px]">
-      <div className="flex md:mt-40 items-center  px-12 rounded-md  justify-center py-12">
+    <div className="w-full xl:min-h-[800px my-20]">
+      <div className="flex mt-40 items-center sm:py-28 px-12 rounded-md  justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold">Sign up</h1>
@@ -40,9 +42,10 @@ const SignupPage = () => {
       
             <Button
               variant="outline"
-              className="w-full"
+              className="w-full flex gap-2"
               onClick={handleGoogleSignUp}
             >
+              <FaGoogle />
               Sign up with Google
             </Button>
           </div>
@@ -52,6 +55,10 @@ const SignupPage = () => {
               Sign in
             </Link>
           </div>
+          <Link to='/' className=" text-sm text-center flex items-center justify-center gap-2 underline">
+            <ArrowLeft className="w-4"/>
+            back to home
+            </Link>
         </div>
       </div>
     </div>

@@ -57,15 +57,14 @@ const HomePage = () => {
         </div>
 
         <BentoComp />
-        <div className="mt-28  max-w-[1000px] mx-auto">
+        <div className="my-20  max-w-[1000px] mx-auto">
           <div className="section-container">
             <div className="flex justify-center">
               <div className="tag">Testimonials</div>
             </div>
             <h2 className="section-title mt-5">What our users say</h2>
             <p className="section-description mt-5">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-              molestias ipsum commodi!
+            Read What Our Satisfied Users Have to Say About Us!
             </p>
           </div>
           <div className="py-6">
