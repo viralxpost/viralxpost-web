@@ -1,4 +1,5 @@
 
+import Navbar from '@/components/Navbar'
 import useTokenStore from '@/store'
 import {Navigate, Outlet} from 'react-router-dom'
 
@@ -11,6 +12,7 @@ const AuthLayout = () => {
   }
   return (
     <>
+    <Navbar/>
      <Outlet/> 
     </>
   )
