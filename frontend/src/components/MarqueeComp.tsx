@@ -80,7 +80,7 @@ const ReviewCard = ({
 
 export function MarqueeComp() {
   return (
-    <div className="relative flex py-20 w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-background ">
+    <div className="relative flex py-10 w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-background ">
       <Marquee pauseOnHover className="[--duration:20s]">
         {firstRow.map((review) => (
           <ReviewCard key={review.username} {...review} />
