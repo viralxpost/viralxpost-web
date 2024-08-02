@@ -14,6 +14,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.14.1",
     "@types/ioredis": "^5.0.0",
+    "axios": "^1.7.3",
     "bcrypt": "^5.1.1",
     "concurrently": "^8.2.2",
     "cookie-parser": "^1.4.6",

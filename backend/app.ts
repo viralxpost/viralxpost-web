@@ -9,6 +9,7 @@ import { config } from "./config/config";
 import passport from "passport";
 import expressSession from "express-session";
 import paymentRouter from "./routes/paymentRouter";
+import axios from "axios";
 
 require("./config/googleStratergy");
 
@@ -47,5 +48,28 @@ app.use("/api/payments", paymentRouter);
 
 //gloabl error handler
 app.use(globalErrorHandler);
+
+const url = `https://viralxpost-web.onrender.com`;
+const interval = 30000;
+
+function reloadWebsite() {
+  axios
+    .get(url)
+    .then((response) => {
+      console.log(
+        `Reloaded at ${new Date().toISOString()}: Status Code ${
+          response.status
+        }`
+      );
+    })
+    .catch((error) => {
+      console.error(
+        `Error reloading at ${new Date().toISOString()}:`,
+        error.message
+      );
+    });
+}
+
+setInterval(reloadWebsite, interval);
 
 export default app;
