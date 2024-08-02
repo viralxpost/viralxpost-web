@@ -49,7 +49,7 @@ app.use("/api/payments", paymentRouter);
 //gloabl error handler
 app.use(globalErrorHandler);
 
-const url = `https://viralxpost-web.onrender.com`;
+const url = config.backendUrl as string;
 const interval = 30000;
 
 function reloadWebsite() {

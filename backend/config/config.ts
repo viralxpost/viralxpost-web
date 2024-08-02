@@ -21,6 +21,7 @@ const _config = {
   callbackUrl: process.env.GOOGLE_CALLBACK_URL,
   razorpayKeyId: process.env.RAZORPAY_KEY_ID,
   razorpayKeySecret: process.env.RAZORPAY_KEY_SECRET,
+  backendUrl: process.env.BACKEND_URL,
 
 };
 
