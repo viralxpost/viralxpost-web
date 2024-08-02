@@ -37,6 +37,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get("/", (req, res) => {
+  res.send("viralxpost");
+});
+
 app.use("/api/v0/users/", userRouter);
 app.use("/api/v0/posts/", postRouter);
 app.use("/auth", authRouter);
