@@ -35,26 +35,31 @@ Before you begin setting up the project, ensure you have the following software 
 
 Setting up the `.env` files is crucial for the project. These files store all the necessary environment variables required for the application to run, such as API keys and configuration settings. Follow these steps:
 
-1. **Separate .env Files for Frontend and Backend**: The project uses two separate `.env` files, one for the frontend and another for the backend. Make sure to set up both configuration files properly.
-    Ensure that both the frontend and backend configurations are set up correctly before proceeding with the installation.
+1. **Separate .env Files for Frontend and Backend**: The project uses two separate `.env` files, one for the frontend and another for the backend. Make sure to set up both configuration files properly before proceeding with the installation.
 
-2. **Copy the sample environment file**: The repository includes sample environment files named `.env.frontend.sample` (in the frontend directory), and `.env.backend.sample` (in the root directory). Copy these files to create your own `.env` files.
+2. **Copy the Sample Environment Files**: The repository includes sample environment files named `.env.sample.frontend` (in the frontend directory) and `.env.sample.backend` (in the root directory). Copy these files to create your own `.env` files.
 
     ```sh
-    cp .env.sample.frontend .env 
-    cp .env.sample.backend .env  
+    cd frontend/ && cp .env.sample.frontend .env
+    cd backend/ && cp .env.sample.backend .env
     ```
 
-3. **Edit the `.env` files**: Open each `.env` file in a text editor and replace the placeholder values with your actual API keys and configuration settings. You may need to add multiple API keys depending on the services your project integrates with.
+3. **Edit the `.env` Files**: Open each `.env` file in a text editor and replace the placeholder values with your actual API keys and configuration settings. You may need to add multiple API keys depending on the services your project integrates with.
 
     ```env
-    # Example .env file
+    # Example .env file for backend
     DB_CONNECTION_STRING=your_database_connection_string_here
     ```
 
     Replace `your_database_connection_string_here` with your actual credentials and configuration value.
 
-By following these steps, you will have your environment configurations properly set up for both the frontend and backend of your project.
+4. **Run the Installation Scripts**: After setting up the `.env` files in both the frontend and backend directories, run the following bash scripts in separate terminal sessions to install the necessary dependencies:
+
+    ```sh
+    ./install-frontend.sh
+    ./install-backend.sh
+    ```
+
 
 
 
@@ -89,9 +94,8 @@ Follow these steps to set up the project on your local machine:
 
 In the project directory, you can run:
 
-- `npm backend` : Starts the backend server using `nodemon` with `backend/server.ts`.
-- `npm frontend` : Starts the frontend development server from the `frontend` directory.
-- `npm run dev` : Runs both frontend and backend concurrently using `concurrently`.
+- `npm start` : Starts the backend server using `nodemon` with `backend/server.ts`.
+- `npm run dev` : Starts the frontend development server from the `frontend` directory.
 
 
 ## Learning Resources
