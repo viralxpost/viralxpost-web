@@ -1,7 +1,7 @@
 import config from "@/config/config";
 import { createOrder, verifyPayment } from "@/http/api";
 import useTokenStore from "@/store";
-import { Check } from "lucide-react";
+import { Check, Loader } from "lucide-react"; // Ensure Loader is imported
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
@@ -74,6 +74,7 @@ const Payment = () => {
   const token = useTokenStore((state) => state.token);
   const navigate = useNavigate();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [loading, setLoading] = useState<{ [key: string]: boolean }>({}); // Add loading state for each button
 
   const handleNavigate = () => {
     navigate("/auth/login");
@@ -103,6 +104,8 @@ const Payment = () => {
       return;
     }
 
+    setLoading((prevState) => ({ ...prevState, [title]: true })); // Set loading state to true for the clicked button
+
     try {
       const order = await createOrder(plan);
       const { id: orderId, amount } = order;
@@ -128,6 +131,8 @@ const Payment = () => {
           } catch (error) {
             console.error("Payment verification failed:", error);
             alert("Payment verification failed.");
+          } finally {
+            setLoading((prevState) => ({ ...prevState, [title]: false })); // Set loading state to false for the clicked button
           }
         },
         prefill: {
@@ -138,6 +143,11 @@ const Payment = () => {
         theme: {
           color: "#3399cc",
         },
+        modal: {
+          ondismiss: () => {
+            setLoading((prevState) => ({ ...prevState, [title]: false })); // Reset loading state when Razorpay modal is closed
+          },
+        },
       };
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -146,6 +156,7 @@ const Payment = () => {
     } catch (error) {
       console.error("Payment initialization failed:", error);
       alert("Payment initialization failed");
+      setLoading((prevState) => ({ ...prevState, [title]: false })); // Set loading state to false for the clicked button
     }
   };
 
@@ -229,8 +240,13 @@ const Payment = () => {
                     inverse && "bg-white text-black"
                   )}
                   onClick={() => handlePayment(title, monthlyPrice)}
+                  disabled={loading[title]} // Disable button when loading
                 >
-                  {buttonText}
+                  {loading[title] ? (
+                    <Loader className="h-5 w-5 animate-spin" />
+                  ) : (
+                    buttonText
+                  )}
                 </button>
                 <ul className="flex flex-col gap-5 mt-8">
                   {features.map((feature, index) => (
