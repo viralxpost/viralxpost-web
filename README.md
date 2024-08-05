@@ -59,6 +59,11 @@ Setting up the `.env` files is crucial for the project. These files store all th
     ./install-frontend.sh
     ./install-backend.sh
     ```
+5. **All in one Installation Script**: After setting up the `.env` files in both the frontend and backend directories, run the following bash script to install the necessary dependencies and start both the frontend and backend:
+
+    ```sh
+    ./install-all.sh
+    ```
 
 
 
@@ -90,6 +95,10 @@ Follow these steps to set up the project on your local machine:
     ```sh
     ./install.sh
     ```
+
+
+
+    
 ## Available Scripts
 
 In the project directory, you can run:
@@ -98,11 +107,18 @@ In the project directory, you can run:
 - `npm run dev` : Starts the frontend development server from the `frontend` directory.
 
 
+
+
+
+
 ## Learning Resources
 - [Reactjs](https://react.dev/)
 - [Node](https://nodejs.org/en)
 - [Express](https://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
+
+
+
 
 ## Need Help?
 - [Discord](https://discord.gg/gFtTFUFFUw)
