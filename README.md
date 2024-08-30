@@ -7,7 +7,7 @@
 ---
 
 <div align="center">
-  Let our AI tool help you create engaging content that breaks through the noise and gets you seen by the right people.
+  Let our AI tool help you create engaging content that breaks through the noise and gets you seen by the right peoples.
 </div>
 
 ---
