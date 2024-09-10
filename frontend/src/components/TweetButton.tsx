@@ -10,7 +10,7 @@ const TweetButton = ({ tweetContent }: { tweetContent: string }) => {
 
   return (
     <Button onClick={handleTweet} className="flex items-center gap-2">
-      <TwitterLogoIcon fontSize={24} />
+      <TwitterLogoIcon className="h-7 w-7"/>
     </Button>
   );
 };
