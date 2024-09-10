@@ -10,6 +10,7 @@ import {
 import { Tweet } from "@/http/api";
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
+import TweetButton from "./TweetButton";
 
 interface TweetCardProps {
   tweet: Tweet;
@@ -48,6 +49,7 @@ export function TweetCard({ tweet, onDelete }: TweetCardProps) {
           <Button variant="destructive" onClick={handleDelete}>
             Delete
           </Button>
+          <TweetButton tweetContent={tweet.content} />
         </div>
       </CardFooter>
     </Card>
