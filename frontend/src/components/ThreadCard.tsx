@@ -10,6 +10,7 @@ import {
 import { Thread } from "@/http/api";
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
+import TweetButton from "./TweetButton";
 
 interface ThreadCardProps {
   thread: Thread;
@@ -48,6 +49,7 @@ export function ThreadCard({ thread, onDelete }: ThreadCardProps) {
           <Button variant="destructive" onClick={handleDelete}>
             Delete
           </Button>
+          <TweetButton tweetContent={thread.content} />
         </div>
       </CardFooter>
     </Card>
