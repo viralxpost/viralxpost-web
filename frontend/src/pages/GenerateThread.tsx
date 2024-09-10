@@ -1,3 +1,4 @@
+import TweetButton from "@/components/TweetButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -288,10 +289,11 @@ const GenerateThread = () => {
                   <p className="mt-14 whitespace-pre-line mb-5">
                     {generatedThreads}
                   </p>
-                  <div className="w-full flex justify-end">
+                  <div className="w-full flex justify-end gap-3">
                     <Button onClick={handleCopy}>
                       {copied ? <Check className="w-4 h-4" /> : <Copy />}
                     </Button>
+                    <TweetButton tweetContent={generatedThreads} />
                   </div>
                 </div>
               ) : (
