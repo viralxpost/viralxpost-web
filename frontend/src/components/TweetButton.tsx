@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { TwitterLogoIcon } from "@radix-ui/react-icons";
+import { FaXTwitter } from "react-icons/fa6";
 
 const TweetButton = ({ tweetContent }: { tweetContent: string }) => {
   const handleTweet = () => {
@@ -10,7 +10,7 @@ const TweetButton = ({ tweetContent }: { tweetContent: string }) => {
 
   return (
     <Button onClick={handleTweet} className="flex items-center gap-2">
-      <TwitterLogoIcon className="h-7 w-7"/>
+      <FaXTwitter className="h-6 w-6" />
     </Button>
   );
 };
